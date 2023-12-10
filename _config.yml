@@ -1,0 +1,15 @@
+name: huebicode
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+permalink: /blog/:title:output_ext
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+      

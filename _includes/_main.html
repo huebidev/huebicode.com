@@ -1,0 +1,14 @@
+<div id="content-wrapper">
+    <main class="content-grid" style="--aside-width: 
+        {% if page.aside_width == true %}
+            {{ site.data.settings.aside_width }}
+        {% elsif page.aside_width %}
+            {{ page.aside_width }}
+        {% else %}
+            0px
+        {% endif %}
+    ;">
+        {{ content }}
+        {% include _footer.html %}
+    </main>
+</div>

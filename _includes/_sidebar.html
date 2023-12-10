@@ -1,0 +1,37 @@
+<div id="sidebar-wrapper">
+    <aside id="sidebar">
+
+        <div id="logo">
+            <a href="/"><img src="/assets/img/logo_gradient.svg" alt=""></a>
+        </div>
+
+        <nav id="main-nav">
+            <ul>
+                <li {% if page.url=="/" %} class="active" {% endif %}>
+                    <a href="/">
+                        <span {% if page.url=="/" %} class="active" {% endif %}>*</span>about<br><span class="nav-underline">--------------</span>
+                    </a>
+                </li>
+                <li {% if page.url=="/blog.html" or page.url contains "/blog/" %} class="active" {% endif %}>
+                    <a href="/blog.html">
+                        <span {% if page.url=="/blog.html" or page.url contains "/blog/" %} class="active" {% endif %}>*</span>blog<br><span class="nav-underline">--------------</span>
+                    </a>
+                </li>
+                <li {% if page.url=="/tools.html" %} class="active" {% endif %}>
+                    <a href="/tools.html">
+                        <span {% if page.url=="/tools.html" %} class="active" {% endif %}>*</span>tools<br><span class="nav-underline">--------------</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="contact-bar">
+            <ul>
+                <li><a href="mailto:huebicode@gmail.com"><img src="/assets/img/icons/mail.svg" alt="mail icon">email</a></li>
+                <li><a href="https://twitter.com/huebicode"><img src="/assets/img/icons/twitter.svg" alt="mail icon">twitter</a></li>
+                <li><a href="https://github.com/huebicode"><img src="/assets/img/icons/github.svg" alt="mail icon">github</a></li>
+            </ul>
+        </div>
+        
+    </aside>
+</div>

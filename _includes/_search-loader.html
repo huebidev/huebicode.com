@@ -1,0 +1,37 @@
+<script src="/assets/js/simple-jekyll-search.js"></script>
+
+{% capture result_elem %}
+<div class="search-hit">
+    <a href="{{ site.url }}{url}">
+        <p>{date}</p>
+        <p>{title}</p>
+        <p>{content}</p>
+        <p>{tags}</p>
+    </a>
+</div>
+{% endcapture %}
+
+{% capture not_found %}<p>Nothing found squirrel...</p>{% endcapture %}
+
+<script>
+SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('search-results-container'),
+    json: '/search.json',
+    searchResultTemplate: '{{ result_elem | strip_newlines }}',
+    noResultsText: '{{ not_found }}',
+    debounceTime: 350,
+    templateMiddleware: function(prop, value) {
+        if (prop === 'content') {
+            const wordLimit = 29
+            const words = value.split(' ')
+            const snippet = words.length > wordLimit
+                ? words.slice(0, wordLimit).join(' ') + '...'
+                : words.join(' ')
+
+            return snippet
+        }
+        return value
+    }
+})
+</script>

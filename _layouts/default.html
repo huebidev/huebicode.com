@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    {% feed_meta %}
+    {% seo %}
+    <title>{{ page.title }}</title>
+</head>
+
+<body>
+    <div id="main-wrapper">
+        {% include _mobile.html %}
+        {% include _sidebar.html %}
+        {% include _main.html %}
+    </div>
+</body>
+
+<script src="/assets/js/main.js"></script>
+
+{% if page.url == "/blog.html" %}
+    <script src="/assets/js/filter.js"></script>
+    {% include _search-loader.html %}
+{% elsif page.url == "/thank-you-for-your-donation.html"%}
+    <script src="/assets/js/confetti.js"></script>
+{% endif %}
+
+</html>
