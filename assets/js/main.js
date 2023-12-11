@@ -1,13 +1,3 @@
-// reset search bar
-window.addEventListener('pageshow', function() {
-    var searchInputs = document.querySelectorAll('input[type="search"]')
-
-    searchInputs.forEach(function(searchInput) {
-        searchInput.value = ''
-    })
-})
-
-
 // mobile sidebar slide gesture
 var sidebar = document.getElementById('sidebar-wrapper')
 var sidebarCheckbox = document.getElementById('hamburger-menu-checkbox')

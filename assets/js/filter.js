@@ -1,13 +1,82 @@
+// show aside-wrapper when javascript available
 document.getElementById("js-active-aside-wrapper").removeAttribute('hidden')
-const nothingFoundDiv = document.getElementById("nothing-found")
 
+
+// reset search bar
 window.addEventListener('pageshow', function() {
+    var searchInputs = document.querySelectorAll('input[type="search"]')
+
+    searchInputs.forEach(function(searchInput) {
+        searchInput.value = ''
+    })
+})
+
+
+// focus wrapper on search input click
+const searchWrapper = document.getElementById('search-bar-wrapper')
+const searchInput = document.getElementById('search-input')
+
+searchInput.addEventListener('focus', () => {
+    searchWrapper.classList.add('input-focused')
+    clear_filter()
+})
+
+searchInput.addEventListener('blur', () => {
+    searchWrapper.classList.remove('input-focused')
+})
+
+const blogWrapper = document.getElementById('blog-wrapper')
+const searchResultsContainer = document.getElementById('search-results-container')
+const footerElem = document.getElementsByTagName('footer')[0]
+searchInput.addEventListener('input', () => {
+    console.log(searchInput.value)
+    if (searchInput.value) {
+        clearButton.classList.add('visible')
+        blogWrapper.setAttribute('hidden', '')
+        footerElem.setAttribute('hidden', '')
+        searchResultsContainer.removeAttribute('hidden')
+    } else {
+        clearButton.classList.remove('visible')
+        searchResultsContainer.setAttribute('hidden', '')
+        blogWrapper.removeAttribute('hidden')
+        footerElem.removeAttribute('hidden')
+    }
+})
+
+
+// search buttons
+const glassButton = document.getElementById('glass-button')
+const clearButton = document.getElementById('clear-button')
+
+glassButton.addEventListener('click', () => {
+    searchInput.focus()
+})
+
+clearButton.addEventListener('click', () => {
+    emulateUserInput(searchInput, '')
+    searchInput.focus()
+})
+
+function emulateUserInput(element, newValue) {
+    element.value = newValue
+
+    const event = new Event('input', { bubbles: true, cancelable: true })
+    element.dispatchEvent(event)
+}
+
+
+// reset checkboxes
+window.addEventListener('pageshow', () => {
+    reset_checkboxes()
+})
+
+function reset_checkboxes() {
     var checkboxes = document.querySelectorAll('input[type="checkbox"]')
 
     checkboxes.forEach(function(checkbox) {
         checkbox.checked = false
     })
-})
+}
 
 
 const tagHover = document.getElementsByClassName("tag")
@@ -37,6 +106,7 @@ add_years_filterbox()
 add_tags_filterbox()
 
 
+const nothingFoundDiv = document.getElementById("nothing-found")
 function filter_blog(filter_year_arr, filter_tags_arr) {
     const updateBlogView = () => {
         
