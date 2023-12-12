@@ -420,6 +420,11 @@ footer {
 }
 
 /* IDs -----------------------------------------------------------------------*/
+#blog-wrapper {
+    /* justify-self: center;
+    align-self: center; */
+}
+
 #donation-wrapper {
     text-align: right;
     margin-top: var(--large-margin);
@@ -508,11 +513,17 @@ footer {
 }
 
 #nothing-found {
-    align-self: center;
-    justify-self: center;
-    text-align: center;
-    width: 200px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     grid-row: 2;
+    align-items: center;
+    justify-content: center;
+
+    & img {
+        max-width: 100%;
+        width: auto;
+    }
 }
 
 #sidebar-overlay {

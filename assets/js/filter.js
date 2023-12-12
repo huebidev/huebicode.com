@@ -107,6 +107,8 @@ add_tags_filterbox()
 
 
 const nothingFoundDiv = document.getElementById("nothing-found")
+nothingFoundDiv.style.display = 'none'
+
 function filter_blog(filter_year_arr, filter_tags_arr) {
     const updateBlogView = () => {
         
@@ -163,9 +165,11 @@ function filter_blog(filter_year_arr, filter_tags_arr) {
             }
         }
         if (visibleCounter === 0) {
-            nothingFoundDiv.removeAttribute('hidden')
+            nothingFoundDiv.style.display = ''
+            footerElem.setAttribute('hidden', '')
         } else {
-            nothingFoundDiv.setAttribute('hidden', '')
+            nothingFoundDiv.style.display = 'none'
+            footerElem.removeAttribute('hidden')
         }
     }
 
