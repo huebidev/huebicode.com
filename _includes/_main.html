@@ -9,6 +9,8 @@
         {% endif %}
     ;">
         {{ content }}
-        {% include _footer.html %}
+        {% unless page.url == "/404.html" %}
+            {% include _footer.html %}
+        {% endunless %}
     </main>
 </div>

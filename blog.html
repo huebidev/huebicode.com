@@ -6,7 +6,7 @@ aside_width: true
 {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
 {% assign grouped_posts = sorted_posts | group_by_exp: "post", "post.date | date: '%Y'" %}
 
-<div id="blog-aside-wrapper">
+<div id="blog-aside-wrapper" class="anim" style="--delay: .1s">
   <aside id="blog-aside">
 
     <div id="rss-feed">
@@ -37,14 +37,20 @@ aside_width: true
   </aside>
 </div>
 
+
 <div id="search-results-container" hidden></div>
 
-<div id="blog-wrapper">
 
-  <div id="nothing-found">
-    <img src="/assets/img/other/reccoon.png" alt="">
-    <img src="/assets/img/other/nothing-found.png" alt="">
+<div id="nothing-found">
+  <div id="reccoon-img-container">
+    <img id="question-mark" class="q-mark-anim" style="--delay: .4s" src="/assets/img/other/question-mark.svg" alt="question mark">
+    <img id="reccoon" src="/assets/img/other/reccoon.svg" alt="reccoon">
   </div>
+  <img src="/assets/img/other/nothing-found.svg" alt="nothing found">
+</div>
+
+
+<div id="blog-wrapper">
 
   <div class="br"></div>
   

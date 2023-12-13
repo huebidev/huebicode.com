@@ -11,7 +11,14 @@
 </div>
 {% endcapture %}
 
-{% capture not_found %}<p style="text-align: center;">Nothing found squirrel...</p>{% endcapture %}
+{% capture not_found %}
+<div id="nothing-found">
+    <div id="reccoon-img-container">
+        <img id="question-mark" class="q-mark-anim" style="--delay: .4s" src="/assets/img/other/question-mark.svg" alt="question mark">
+        <img id="reccoon" src="/assets/img/other/reccoon.svg" alt="reccoon">
+    </div><img src="/assets/img/other/nothing-found.svg" alt="nothing found">
+</div>
+{% endcapture %}
 
 <script>
 SimpleJekyllSearch({
@@ -19,7 +26,7 @@ SimpleJekyllSearch({
     resultsContainer: document.getElementById('search-results-container'),
     json: '/search.json',
     searchResultTemplate: '{{ result_elem | strip_newlines }}',
-    noResultsText: '{{ not_found }}',
+    noResultsText: '{{ not_found | strip_newlines }}',
     debounceTime: 350,
     templateMiddleware: function(prop, value) {
         if (prop === 'content') {

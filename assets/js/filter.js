@@ -29,7 +29,6 @@ const blogWrapper = document.getElementById('blog-wrapper')
 const searchResultsContainer = document.getElementById('search-results-container')
 const footerElem = document.getElementsByTagName('footer')[0]
 searchInput.addEventListener('input', () => {
-    console.log(searchInput.value)
     if (searchInput.value) {
         clearButton.classList.add('visible')
         blogWrapper.setAttribute('hidden', '')
@@ -65,14 +64,14 @@ function emulateUserInput(element, newValue) {
 }
 
 
-// reset checkboxes
+// checkboxes
+const checkboxes = document.querySelectorAll('input[type="checkbox"]')
+
 window.addEventListener('pageshow', () => {
-    reset_checkboxes()
+    resetCheckboxes()
 })
 
-function reset_checkboxes() {
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]')
-
+function resetCheckboxes() {
     checkboxes.forEach(function(checkbox) {
         checkbox.checked = false
     })
@@ -166,10 +165,12 @@ function filter_blog(filter_year_arr, filter_tags_arr) {
         }
         if (visibleCounter === 0) {
             nothingFoundDiv.style.display = ''
-            footerElem.setAttribute('hidden', '')
+            blogWrapper.setAttribute('hidden', '')
+            // footerElem.setAttribute('hidden', '')
         } else {
             nothingFoundDiv.style.display = 'none'
-            footerElem.removeAttribute('hidden')
+            blogWrapper.removeAttribute('hidden')
+            // footerElem.removeAttribute('hidden')
         }
     }
 
@@ -265,11 +266,16 @@ function createFilterBox(arrayType, arrayChbx, ulId) {
 
         checkbox.addEventListener('change', function() {
             if (checkbox.checked) {
+                emulateUserInput(searchInput, '')
+                footerElem.setAttribute('hidden', '')
                 label.className = "filter-label-checked"
                 if (!arrayChbx.includes(item)) {
                     arrayChbx.push(item);
                 }
             } else {
+                if(areAllCheckboxesUnchecked()) {
+                    footerElem.removeAttribute('hidden')
+                }
                 label.className = "filter-label-unchecked"
                 const index = arrayChbx.indexOf(item)
                 if (index > -1) {
@@ -287,4 +293,9 @@ function add_years_filterbox() {
 
 function add_tags_filterbox() {
     createFilterBox(tagsArr, tagsArrChbx, "filter-ul-tags");
+}
+
+function areAllCheckboxesUnchecked() {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    return Array.from(checkboxes).every(checkbox => !checkbox.checked);
 }
