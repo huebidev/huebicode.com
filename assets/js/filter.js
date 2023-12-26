@@ -1,6 +1,20 @@
 // show aside-wrapper when javascript available
-document.getElementById("js-active-aside-wrapper").removeAttribute('hidden')
+let jsActiveAsideWrapper = document.getElementById("js-active-aside-wrapper")
+jsActiveAsideWrapper.style.display = 'block'
 
+
+// mobile filter button
+function toggle_filter() {
+    if (jsActiveAsideWrapper.style.maxHeight === "1000px") {
+        jsActiveAsideWrapper.style.maxHeight = 0
+        jsActiveAsideWrapper.style.transition = "max-height 0.3s ease-out"
+        clear_filter()
+    }
+    else {
+        jsActiveAsideWrapper.style.maxHeight = "1000px"
+        jsActiveAsideWrapper.style.transition = "max-height 0.3s ease-in"
+    }
+}
 
 // reset search bar
 window.addEventListener('pageshow', function() {
@@ -27,18 +41,15 @@ searchInput.addEventListener('blur', () => {
 
 const blogWrapper = document.getElementById('blog-wrapper')
 const searchResultsContainer = document.getElementById('search-results-container')
-const footerElem = document.getElementsByTagName('footer')[0]
 searchInput.addEventListener('input', () => {
     if (searchInput.value) {
         clearButton.classList.add('visible')
         blogWrapper.setAttribute('hidden', '')
-        footerElem.setAttribute('hidden', '')
         searchResultsContainer.removeAttribute('hidden')
     } else {
         clearButton.classList.remove('visible')
         searchResultsContainer.setAttribute('hidden', '')
         blogWrapper.removeAttribute('hidden')
-        footerElem.removeAttribute('hidden')
     }
 })
 
@@ -166,11 +177,9 @@ function filter_blog(filter_year_arr, filter_tags_arr) {
         if (visibleCounter === 0) {
             nothingFoundDiv.style.display = ''
             blogWrapper.setAttribute('hidden', '')
-            // footerElem.setAttribute('hidden', '')
         } else {
             nothingFoundDiv.style.display = 'none'
             blogWrapper.removeAttribute('hidden')
-            // footerElem.removeAttribute('hidden')
         }
     }
 
@@ -267,15 +276,11 @@ function createFilterBox(arrayType, arrayChbx, ulId) {
         checkbox.addEventListener('change', function() {
             if (checkbox.checked) {
                 emulateUserInput(searchInput, '')
-                footerElem.setAttribute('hidden', '')
                 label.className = "filter-label-checked"
                 if (!arrayChbx.includes(item)) {
                     arrayChbx.push(item);
                 }
             } else {
-                if(areAllCheckboxesUnchecked()) {
-                    footerElem.removeAttribute('hidden')
-                }
                 label.className = "filter-label-unchecked"
                 const index = arrayChbx.indexOf(item)
                 if (index > -1) {

@@ -12,9 +12,10 @@ aside_width: true
     <div id="rss-feed">
       <span class="fg-dark">feed</span><br>
       <a href="/feed.xml"><img class="icon" src="/assets/img/icons/rss.svg" alt="rss feed">rss</a>
+      <a href="#" id="filter-button" onclick="toggle_filter()"><img class="icon" src="/assets/img/icons/filter.svg" alt="rss feed">filter</a>
     </div>
 
-    <div id="js-active-aside-wrapper" hidden>
+    <div id="js-active-aside-wrapper">
       
       <div id="filter-years">
         <p class="fg-dark">years</p>
@@ -66,7 +67,7 @@ aside_width: true
             <div>
               <time datetime="{{ post.date | date: '%Y-%m-%d'}}" class="post-date">{{ post.date | date: "%d.%m.%Y" }}</time>
               <h2>{{ post.title }}</h2>
-              {{ post.content | strip_html | truncatewords: 29}} <span class="blue">→</span>
+              <p>{{ post.content | strip_html | truncatewords: 29}} <span class="blue">→</span></p>
             </div>
           </a>
 

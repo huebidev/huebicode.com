@@ -7,6 +7,6 @@ layout: none
 "date" : "{{ post.date | date: "%d.%m.%Y" }}",
 "title" :"{{ post.title | escape }}",
 "content" : "{{ post.content | strip_html | strip_newlines | remove_chars_cn | strip | strip_multi_spaces | format_periods }}",
-"tags" : "{{ post.tags | join: ', ' }}"
+"tags" : "{{ post.tags | join: ' * ' }}"
 }{% unless forloop.last %},{% endunless %}{% endfor %}
 ]

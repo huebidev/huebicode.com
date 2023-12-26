@@ -3,10 +3,9 @@
 {% capture result_elem %}
 <div class="search-hit">
     <a href="{{ site.url }}{url}">
-        <p>{date}</p>
-        <p>{title}</p>
-        <p>{content}</p>
-        <p>{tags}</p>
+        <h2>{title}</h2>
+        <p class="search-hit-tags">{date} * {tags}</p>
+        <p class="search-hit-content">{content}</p>
     </a>
 </div>
 {% endcapture %}
