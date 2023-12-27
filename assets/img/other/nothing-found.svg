@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="66.145653mm"
-   height="4.5934496mm"
-   viewBox="0 0 66.145654 4.5934497"
+   width="44.292545mm"
+   height="3.0758719mm"
+   viewBox="0 0 44.292546 3.075872"
    version="1.1"
    id="svg1"
    xml:space="preserve"
-   sodipodi:docname="final-reccoon.svg"
+   sodipodi:docname="raccoon.svg"
    inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -38,18 +38,18 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="matrix(0.26429695,0,0,0.26429695,-124.51892,22.288344)"
+     transform="matrix(0.26429695,0,0,0.26429695,-117.01326,26.791465)"
      style="stroke-width:3.78362"><text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:27.8078px;font-family:Silkscreen;-inkscape-font-specification:Silkscreen;letter-spacing:0px;display:inline;fill:#c8c9ca;fill-opacity:1;stroke-width:3.78772;stroke-linecap:round;stroke-linejoin:round"
-       x="467.65668"
-       y="-66.950821"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6207px;font-family:Silkscreen;-inkscape-font-specification:Silkscreen;letter-spacing:0px;display:inline;fill:#c8c9ca;fill-opacity:1;stroke-width:3.78771;stroke-linecap:round;stroke-linejoin:round"
+       x="440.40646"
+       y="-89.730858"
        id="text1"
        inkscape:export-filename="nothing-found.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96"><tspan
          sodipodi:role="line"
          id="tspan1"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Silkscreen;-inkscape-font-specification:Silkscreen;fill:#c8c9ca;fill-opacity:1;stroke-width:3.78772"
-         x="467.65668"
-         y="-66.950821">NOTHING FOUND</tspan></text></g></svg>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Silkscreen;-inkscape-font-specification:Silkscreen;fill:#c8c9ca;fill-opacity:1;stroke-width:3.78771"
+         x="440.40646"
+         y="-89.730858">NOTHING FOUND</tspan></text></g></svg>

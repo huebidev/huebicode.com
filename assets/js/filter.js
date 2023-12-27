@@ -1,16 +1,19 @@
 // show aside-wrapper when javascript available
 let jsActiveAsideWrapper = document.getElementById("js-active-aside-wrapper")
 jsActiveAsideWrapper.style.display = 'block'
-
+let filterButton = document.getElementById("filter-button")
+filterButton.style.display = ""
 
 // mobile filter button
 function toggle_filter() {
     if (jsActiveAsideWrapper.style.maxHeight === "1000px") {
+        filterButton.style.color = "rgb(220,220,220)"
         jsActiveAsideWrapper.style.maxHeight = 0
         jsActiveAsideWrapper.style.transition = "max-height 0.3s ease-out"
         clear_filter()
     }
     else {
+        filterButton.style.color = "rgb(23,182,255)"
         jsActiveAsideWrapper.style.maxHeight = "1000px"
         jsActiveAsideWrapper.style.transition = "max-height 0.3s ease-in"
     }

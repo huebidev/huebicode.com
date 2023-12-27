@@ -1,13 +1,6 @@
-<div id="content-wrapper">
-    <main class="content-grid" style="--aside-width: 
-        {% if page.aside_width == true %}
-            {{ site.data.settings.aside_width }}
-        {% elsif page.aside_width %}
-            {{ page.aside_width }}
-        {% else %}
-            0px
-        {% endif %}
-    ;">
+<div id="content-wrapper" {% if page.url == '/blog.html' %} style="align-self: unset;"{% endif %}>
+    <main class="content-grid" style="--aside-width: {% if page.aside_width == true %}{{ site.data.settings.aside_width }}{% elsif page.aside_width %}{{ page.aside_width }}{% else %}0px{% endif %};">
+        
         {{ content }}
         {% unless page.url == "/blog.html" or page.url == "/404.html" %}
             {% include _footer.html %}

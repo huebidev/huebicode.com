@@ -12,10 +12,10 @@ aside_width: true
     <div id="rss-feed">
       <span class="fg-dark">feed</span><br>
       <a href="/feed.xml"><img class="icon" src="/assets/img/icons/rss.svg" alt="rss feed">rss</a>
-      <a href="#" id="filter-button" onclick="toggle_filter()"><img class="icon" src="/assets/img/icons/filter.svg" alt="rss feed">filter</a>
+      <a href="#" id="filter-button" style="display: none;" onclick="toggle_filter()"><img class="icon" src="/assets/img/icons/filter.svg" alt="rss feed">filter</a>
     </div>
 
-    <div id="js-active-aside-wrapper">
+    <div id="js-active-aside-wrapper" style="display: none;">
       
       <div id="filter-years">
         <p class="fg-dark">years</p>
@@ -41,11 +41,10 @@ aside_width: true
 
 <div id="search-results-container" hidden></div>
 
-
-<div id="nothing-found">
-  <div id="reccoon-img-container">
+<div id="nothing-found" style="display: none;">
+  <div id="raccoon-img-container">
     <img id="question-mark" class="q-mark-anim" style="--delay: .4s" src="/assets/img/other/question-mark.svg" alt="question mark">
-    <img id="reccoon" src="/assets/img/other/reccoon.svg" alt="reccoon">
+    <img id="raccoon" src="/assets/img/other/raccoon.svg" alt="raccoon">
   </div>
   <img src="/assets/img/other/nothing-found.svg" alt="nothing found">
 </div>
@@ -53,7 +52,7 @@ aside_width: true
 
 <div id="blog-wrapper">
 
-  <div class="br"></div>
+  <div class="br-top"></div>
   
   {% for group in grouped_posts %}
 
@@ -82,7 +81,7 @@ aside_width: true
         </li>
       {% endfor %}
     </ul>
-
   {% endfor %}
 
+  <div class="br-bottom"></div>
 </div>

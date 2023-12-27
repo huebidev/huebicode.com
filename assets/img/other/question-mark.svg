@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="3.9135108mm"
-   height="5.6080165mm"
-   viewBox="0 0 3.9135109 5.6080166"
+   width="2.6205726mm"
+   height="3.75525mm"
+   viewBox="0 0 2.6205726 3.7552501"
    version="1.1"
    id="svg1"
    xml:space="preserve"
-   sodipodi:docname="final-reccoon.svg"
+   sodipodi:docname="raccoon.svg"
    inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -38,9 +38,9 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="matrix(0.26429695,0,0,0.26429695,-164.22158,61.959303)"
+     transform="matrix(0.26429695,0,0,0.26429695,-137.84926,67.689465)"
      style="stroke-width:3.78362"><path
-       d="m 623.46773,-234.43064 v 2.11516 h -2.11519 v 2.11568 2.11515 2.11519 h 2.11519 2.11515 v -2.11519 -2.11515 -2.11568 h 2.11572 2.11516 2.11518 v 2.11568 2.11515 2.11519 h -2.11518 v 2.11517 h -2.11516 v 2.11567 2.11517 h 2.11516 2.11518 v -2.11517 -2.11567 h 2.11516 2.11569 v -2.11517 -2.11519 -2.11515 -2.11568 h -2.11569 v -2.11516 h -2.11516 -2.11518 -2.11516 -2.11572 z m 4.23087,16.98828 v 2.11515 2.11519 h 2.11516 2.11518 v -2.11519 -2.11515 h -2.11518 z"
+       d="m 522.98599,-256.11141 v 1.41636 h -1.41638 v 1.4167 1.41635 1.41638 h 1.41638 1.41635 v -1.41638 -1.41635 -1.4167 h 1.41673 1.41636 1.41637 v 1.4167 1.41635 1.41638 h -1.41637 v 1.41637 h -1.41636 v 1.41669 1.41637 h 1.41636 1.41637 v -1.41637 -1.41669 h 1.41636 1.41671 v -1.41637 -1.41638 -1.41635 -1.4167 h -1.41671 v -1.41636 h -1.41636 -1.41637 -1.41636 -1.41673 z m 2.83308,11.37572 v 1.41635 1.41638 h 1.41636 1.41637 v -1.41638 -1.41635 h -1.41637 z"
        style="fill:#a0a2a3;stroke-width:1.00109;stroke-linecap:round;stroke-linejoin:round"
        id="path1"
        inkscape:label="question_mark"
