@@ -3,7 +3,9 @@
         
         {{ content }}
         {% unless page.url == "/blog.html" or page.url == "/404.html" %}
-            {% include _footer.html %}
+            {% if page.include_footer != false %}
+                {% include _footer.html %}
+            {% endif %}
         {% endunless %}
     </main>
 </div>

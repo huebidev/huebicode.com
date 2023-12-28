@@ -1,1 +1,0 @@
-- header aus blog post snippets enfernen (Intro - Powershell Obfuscation)

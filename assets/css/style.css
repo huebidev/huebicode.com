@@ -466,6 +466,15 @@ a:has(> img) {
     border: none;
 }
 
+ol {
+    /* list-style-position: inside; */
+    font-size: smaller;
+}
+
+sup a {
+    border: none;
+}
+
 ul {
     list-style: none;
 }
@@ -668,6 +677,10 @@ footer {
             color: var(--fg-color-text);
         }
     }
+}
+
+.blog-post-title {
+    margin-top: calc(var(--large-margin)*2);
 }
 
 .br-top, .br-bottom {
