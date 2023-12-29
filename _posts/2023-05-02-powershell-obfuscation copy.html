@@ -2,6 +2,7 @@
 layout: post
 title: Powershell Obfuscation
 tags: [infosec]
+code: true
 ---
 <h3>Intro</h3>
 
@@ -23,67 +24,62 @@ tags: [infosec]
 
 <p>In the following example the build-in function "Get-ChildItem" is extended through the profile.</p>
 
-<div class="code">
-    function Get-ChildItem {
-        Microsoft.PowerShell.Management\Get-ChildItem
-    
-        # malicious code...
-        Write-Output "[+] Malicious code executed!"
-    }
-    
-    # PS> Get-ChildItem
-    #
-    # Directory: C:\Users\Victim\Desktop\Files
-    #
-    # Mode      LastWriteTime       Length  Name
-    # ----      -------------       ------  ----
-    # -a----    01.05.2023 13:05    0       file1
-    # -a----    01.05.2023 13:05    0       file2
-    # -a----    01.05.2023 13:05    0       file3
-    #
-    # [+] Malicious code executed!
+<div class="code language-powershell">function Get-ChildItem {
+    Microsoft.PowerShell.Management\Get-ChildItem
+
+    # malicious code...
+    Write-Output "[+] Malicious code executed!"
+}
+
+# PS> Get-ChildItem
+#
+# Directory: C:\Users\Victim\Desktop\Files
+#
+# Mode      LastWriteTime       Length  Name
+# ----      -------------       ------  ----
+# -a----    01.05.2023 13:05    0       file1
+# -a----    01.05.2023 13:05    0       file2
+# -a----    01.05.2023 13:05    0       file3
+#
+# [+] Malicious code executed!
 </div>
 
 <h4>Aliases</h4>
 
 <p>Powershell allows a large number of alternative notations and abbreviations for built-in functions, which can be viewed using the 'Get-Alias' command. Parameters can also be abbreviated as desired, as long as there are no ambiguities (e.g. 'ExecutionPolicy' to 'ep' or 'exe'). All of the commands listed below result in identical output.</p>
 
-<div class="code">
-    Write-Output "Malicious code executed!"
-    write "Malicious code executed!"
-    echo "Malicious code executed!"
+<div class="code language-powershell">Write-Output "Malicious code executed!"
+write "Malicious code executed!"
+echo "Malicious code executed!"
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>Calloperators, Wildcards</h4>
 
 <p>With the call operators ('&' or '.') a function can be called. In combination with the 'Get-Command' function (abbr. 'gcm'), which enables the command search with the wildcard character '*', a command call can be shortened and thus obfuscated.</p>
 
-<div class="code">
-    &(gcm *te-Ou*) "Malicious code executed!"
+<div class="code language-powershell">&(gcm *te-Ou*) "Malicious code executed!"
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>Case, Escape-, Whitespacecharacters</h4>
 
 <p>There is no distinction between upper and lower case. Spaces are ignored regardless of their length, allowing malicious code to be hidden at the end of a regular command. The backtick '`' is used as an escape character. Unless this is used before a predefined character such as '`n' for a new line or '`t' for a tab, it is also ignored.</p>
 
-<div class="code">
-    &("`wR"+ "It`e" + "-o"+"ut`Put") "`Ma`licious` code e`xecuted`!"
+<div class="code language-powershell">&("`wR"+ "It`e" + "-o"+"ut`Put") "`Ma`licious` code e`xecuted`!"
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>.NET-Functions</h4>
 
 <p>Through .NET access, the .NET functions can also be addressed instead of native Powershell functions.</p>
 
-<div class="code">
-    [System.Console]::WriteLine("Malicious code executed!")
+<div class="code language-powershell">[System.Console]::WriteLine("Malicious code executed!")
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>Specialcharacters</h4>
@@ -92,26 +88,23 @@ tags: [infosec]
 
 <p>The following special character command was obfuscated with <a href="https://github.com/danielbohannon/Invoke-Obfuscation">Invoke-Obfuscation</a> by Daniel Bohannon.</p>
 
-<div class="code">
-    ${~%=}=+$();${~^}=${~%=};${=[}=++${~%=};${+-}=++${~%=};${=-^}=++${~%=};${*]}=++${~%=};${~``}=++${~%=};${)^}=++${~%=};${)}=++${~%=};${$^}=++${~%=};${.]}=++${~%=};${``}="["+"$(@{})"[${)}]+"$(@{})"["${=[}${.]}"]+"$(@{})"["${+-}${~^}"]+"$?"[${=[}]+"]";${~%=}="".("$(@{})"["${=[}${*]}"]+"$(@{})"["${=[}${)^}"]+"$(@{})"[${~^}]+"$(@{})"[${*]}]+"$?"[${=[}]+"$(@{})"[${=-^}]);${~%=}="$(@{})"["${=[}"+"${*]}"]+"$(@{})"[${*]}]+"${~%=}"["${+-}"+"${)}"];.${~%=}("${``}${$^}${)}+${``}${=[}${=[}${*]}+${``}${=[}${~^}${~``}+${``}${=[}${=[}${)^}+${``}${=[}${~^}${=[}+${``}${*]}${~``}+${``}${)}${.]}+${``}${=[}${=[}${)}+${``}${=[}${=[}${)^}+${``}${=[}${=[}${+-}+${``}${=[}${=[}${)}+${``}${=[}${=[}${)^}+${``}${=-^}${+-}+${``}${=-^}${.]}+${``}${)}${)}+${``}${.]}${)}+${``}${=[}${~^}${$^}+${``}${=[}${~^}${~``}+${``}${.]}${.]}+${``}${=[}${~^}${~``}+${``}${=[}${=[}${=[}+${``}${=[}${=[}${)}+${``}${=[}${=[}${~``}+${``}${=-^}${+-}+${``}${.]}${.]}+${``}${=[}${=[}${=[}+${``}${=[}${~^}${~^}+${``}${=[}${~^}${=[}+${``}${=-^}${+-}+${``}${=[}${~^}${=[}+${``}${=[}${+-}${~^}+${``}${=[}${~^}${=[}+${``}${.]}${.]}+${``}${=[}${=[}${)}+${``}${=[}${=[}${)^}+${``}${=[}${~^}${=[}+${``}${=[}${~^}${~^}+${``}${=-^}${=-^}+${``}${=-^}${.]}|${~%=}")
+<div class="code language-powershell">${~%=}=+$();${~^}=${~%=};${=[}=++${~%=};${+-}=++${~%=};${=-^}=++${~%=};${*]}=++${~%=};${~``}=++${~%=};${)^}=++${~%=};${)}=++${~%=};${$^}=++${~%=};${.]}=++${~%=};${``}="["+"$(@{})"[${)}]+"$(@{})"["${=[}${.]}"]+"$(@{})"["${+-}${~^}"]+"$?"[${=[}]+"]";${~%=}="".("$(@{})"["${=[}${*]}"]+"$(@{})"["${=[}${)^}"]+"$(@{})"[${~^}]+"$(@{})"[${*]}]+"$?"[${=[}]+"$(@{})"[${=-^}]);${~%=}="$(@{})"["${=[}"+"${*]}"]+"$(@{})"[${*]}]+"${~%=}"["${+-}"+"${)}"];.${~%=}("${``}${$^}${)}+${``}${=[}${=[}${*]}+${``}${=[}${~^}${~``}+${``}${=[}${=[}${)^}+${``}${=[}${~^}${=[}+${``}${*]}${~``}+${``}${)}${.]}+${``}${=[}${=[}${)}+${``}${=[}${=[}${)^}+${``}${=[}${=[}${+-}+${``}${=[}${=[}${)}+${``}${=[}${=[}${)^}+${``}${=-^}${+-}+${``}${=-^}${.]}+${``}${)}${)}+${``}${.]}${)}+${``}${=[}${~^}${$^}+${``}${=[}${~^}${~``}+${``}${.]}${.]}+${``}${=[}${~^}${~``}+${``}${=[}${=[}${=[}+${``}${=[}${=[}${)}+${``}${=[}${=[}${~``}+${``}${=-^}${+-}+${``}${.]}${.]}+${``}${=[}${=[}${=[}+${``}${=[}${~^}${~^}+${``}${=[}${~^}${=[}+${``}${=-^}${+-}+${``}${=[}${~^}${=[}+${``}${=[}${+-}${~^}+${``}${=[}${~^}${=[}+${``}${.]}${.]}+${``}${=[}${=[}${)}+${``}${=[}${=[}${)^}+${``}${=[}${~^}${=[}+${``}${=[}${~^}${~^}+${``}${=-^}${=-^}+${``}${=-^}${.]}|${~%=}")
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <p>The Powershell code after resolving the special characters:</p>
 
-<div class="code">
-    [CHar]87+[CHar]114+[CHar]105+[CHar]116+[CHar]101+[CHar]45+[CHar]79+[CHar]117+[CHar]116+[CHar]112+[CHar]117+[CHar]116+[CHar]32+[CHar]39+[CHar]77+[CHar]97+[CHar]108+[CHar]105+[CHar]99+[CHar]105+[CHar]111+[CHar]117+[CHar]115+[CHar]32+[CHar]99+[CHar]111+[CHar]100+[CHar]101+[CHar]32+[CHar]101+[CHar]120+[CHar]101+[CHar]99+[CHar]117+[CHar]116+[CHar]101+[CHar]100+[CHar]33+[CHar]39|iex
+<div class="code language-powershell">[CHar]87+[CHar]114+[CHar]105+[CHar]116+[CHar]101+[CHar]45+[CHar]79+[CHar]117+[CHar]116+[CHar]112+[CHar]117+[CHar]116+[CHar]32+[CHar]39+[CHar]77+[CHar]97+[CHar]108+[CHar]105+[CHar]99+[CHar]105+[CHar]111+[CHar]117+[CHar]115+[CHar]32+[CHar]99+[CHar]111+[CHar]100+[CHar]101+[CHar]32+[CHar]101+[CHar]120+[CHar]101+[CHar]99+[CHar]117+[CHar]116+[CHar]101+[CHar]100+[CHar]33+[CHar]39|iex
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <p>The final code after resolving the byte characters:</p>
 
-<div class="code">
-    Write-Output 'Malicious code executed!' | iex
+<div class="code language-powershell">Write-Output 'Malicious code executed!' | iex
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h3>Strings</h3>
@@ -122,41 +115,37 @@ tags: [infosec]
 
 <p>Characters can be concatenated by '-split', '-join' or the '+' sign.</p>
 
-<div class="code">
-    Write-Output ("Malicious" + " " + "code" + " " + "executed!")
-    Write-Output ("MaliciousXXXcodeXXXexecuted!" -split "XXX" -join " ")
+<div class="code language-powershell">Write-Output ("Malicious" + " " + "code" + " " + "executed!")
+Write-Output ("MaliciousXXXcodeXXXexecuted!" -split "XXX" -join " ")
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>Replacing</h4>
 
 <p>Character strings can be exchanged using the '-replace' option.</p>
 
-<div class="code">
-    Write-Output ("MaliciousXXXcodeXXXexecuted!" -replace("XXX"," "))
+<div class="code language-powershell">Write-Output ("MaliciousXXXcodeXXXexecuted!" -replace("XXX"," "))
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>Formatoperator</h4>
 
 <p>The format operator '-f' can be used to rearrange strings based on number order.</p>
 
-<div class="code">
-    Write-Output ("{1} {0} {2}" -f "code", "Malicious", "executed!")
+<div class="code language-powershell">Write-Output ("{1} {0} {2}" -f "code", "Malicious", "executed!")
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>Reversing</h4>
 
 <p>Characters can be reversed via array slicing.</p>
 
-<div class="code">
-    Write-Output (-join "!detucexe edoc suoicilaM"[24 .. 0])
+<div class="code language-powershell">Write-Output (-join "!detucexe edoc suoicilaM"[24 .. 0])
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h3>Encoding</h3>
@@ -167,70 +156,65 @@ tags: [infosec]
 
 <p>The code to be executed can be encoded and passed to Base64. The command encoded in this way can be started via Powershell with the '-EncodedCommand' option.</p>
 
-<div class="code">
-    [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes("Write-Output 'Malicious code executed!'")) | Write-Host
+<div class="code language-powershell">[Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes("Write-Output 'Malicious code executed!'")) | Write-Host
 
-    # PS> VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAE0AYQBsAGkAYwBpAG8AdQBzACAAYwBvAGQAZQAgAGUAeABlAGMAdQB0AGUAZAAhACcA
+# PS> VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAE0AYQBsAGkAYwBpAG8AdQBzACAAYwBvAGQAZQAgAGUAeABlAGMAdQB0AGUAZAAhACcA
 
-    powershell -EncodedCommand "VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAE0AYQBsAGkAYwBpAG8AdQBzACAAYwBvAGQAZQAgAGUAeABlAGMAdQB0AGUAZAAhACcA"
+powershell -EncodedCommand "VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAE0AYQBsAGkAYwBpAG8AdQBzACAAYwBvAGQAZQAgAGUAeABlAGMAdQB0AGUAZAAhACcA"
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>ASCII</h4>
 
 <p>ASCII-encoded commands can be executed after a byte conversion, for example via 'Invoke-Expression'.</p>
 
-<div class="code">
-    [Text.Encoding]::ASCII.GetBytes("Write-Output 'Malicious code executed!'") | Out-String | ForEach-Object {$_.Replace("`n",",").TrimEnd(",")}
+<div class="code language-powershell">[Text.Encoding]::ASCII.GetBytes("Write-Output 'Malicious code executed!'") | Out-String | ForEach-Object {$_.Replace("`n",",").TrimEnd(",")}
 
-    # PS> 87,114,105,116,101,45,79,117,116,112,117,116,32,39,77,97,108,105,99,105,111,117,115,32,99,111,100,101,32,101,120,101,99,117,116,101,100,33,39
+# PS> 87,114,105,116,101,45,79,117,116,112,117,116,32,39,77,97,108,105,99,105,111,117,115,32,99,111,100,101,32,101,120,101,99,117,116,101,100,33,39
 
-    Invoke-Expression( -join [char[]](87,114,105,116,101,45,79,117,116,112,117,116,32,39,77,97,108,105,99,105,111,117,115,32,99,111,100,101,32,101,120,101,99,117,116,101,100,33,39))
+Invoke-Expression( -join [char[]](87,114,105,116,101,45,79,117,116,112,117,116,32,39,77,97,108,105,99,105,111,117,115,32,99,111,100,101,32,101,120,101,99,117,116,101,100,33,39))
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>Hex</h4>
 
 <p>The use of hex encoding is possible in a similar way.</p>
 
-<div class="code">
-    [Text.Encoding]::UTF8.GetBytes("Write-Output 'Malicious code executed!'") | ForEach-Object {"'" + $_.ToString("X2") + "'"} | Out-String | ForEach-Object {$_.Replace("`n",",").TrimEnd(",")}
+<div class="code language-powershell">[Text.Encoding]::UTF8.GetBytes("Write-Output 'Malicious code executed!'") | ForEach-Object {"'" + $_.ToString("X2") + "'"} | Out-String | ForEach-Object {$_.Replace("`n",",").TrimEnd(",")}
 
-    # PS> '57','72','69','74','65','2D','4F','75','74','70','75','74','20','27','4D','61','6C','69','63','69','6F','75','73','20','63','6F','64','65','20','65','78','65','63','75','74','65','64','21','27'
+# PS> '57','72','69','74','65','2D','4F','75','74','70','75','74','20','27','4D','61','6C','69','63','69','6F','75','73','20','63','6F','64','65','20','65','78','65','63','75','74','65','64','21','27'
 
-    Invoke-Expression( -join ('57','72','69','74','65','2D','4F','75','74','70','75','74','20','27','4D','61','6C','69','63','69','6F','75','73','20','63','6F','64','65','20','65','78','65','63','75','74','65','64','21','27' | ForEach-Object { ([Convert]::ToInt16($_.ToString(),16) -as [char]) }))
+Invoke-Expression( -join ('57','72','69','74','65','2D','4F','75','74','70','75','74','20','27','4D','61','6C','69','63','69','6F','75','73','20','63','6F','64','65','20','65','78','65','63','75','74','65','64','21','27' | ForEach-Object { ([Convert]::ToInt16($_.ToString(),16) -as [char]) }))
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>Octal</h4>
 
 <p>Similar with octal encoding.</p>
 
-<div class="code">
-    [Text.Encoding]::UTF8.GetBytes("Write-Output 'Malicious code executed!'") | ForEach-Object { [Convert]::ToString($_, 8) } | Out-String | ForEach-Object {$_.Replace("`n",",").TrimEnd(",")}
+<div class="code language-powershell">[Text.Encoding]::UTF8.GetBytes("Write-Output 'Malicious code executed!'") | ForEach-Object { [Convert]::ToString($_, 8) } | Out-String | ForEach-Object {$_.Replace("`n",",").TrimEnd(",")}
 
-    # PS> 127,162,151,164,145,55,117,165,164,160,165,164,40,47,115,141,154,151,143,151,157,165,163,40,143,157,144,145,40,145,170,145,143,165,164,145,144,41,47
+# PS> 127,162,151,164,145,55,117,165,164,160,165,164,40,47,115,141,154,151,143,151,157,165,163,40,143,157,144,145,40,145,170,145,143,165,164,145,144,41,47
 
-    Invoke-Expression( -join (127,162,151,164,145,55,117,165,164,160,165,164,40,47,115,141,154,151,143,151,157,165,163,40,143,157,144,145,40,145,170,145,143,165,164,145,144,41,47 | ForEach-Object { ([Convert]::ToInt16($_.ToString(),8) -as [char]) }))
+Invoke-Expression( -join (127,162,151,164,145,55,117,165,164,160,165,164,40,47,115,141,154,151,143,151,157,165,163,40,143,157,144,145,40,145,170,145,143,165,164,145,144,41,47 | ForEach-Object { ([Convert]::ToInt16($_.ToString(),8) -as [char]) }))
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>Binary</h4>
 
 <p>And the same with binary encoding.</p>
 
-<div class="code">
-    [Text.Encoding]::UTF8.GetBytes("Write-Output 'Malicious code executed!'") | ForEach-Object { [Convert]::ToString($_, 2) } | Out-String | ForEach-Object {$_.Replace("`n",",").TrimEnd(",")}
+<div class="code language-powershell">[Text.Encoding]::UTF8.GetBytes("Write-Output 'Malicious code executed!'") | ForEach-Object { [Convert]::ToString($_, 2) } | Out-String | ForEach-Object {$_.Replace("`n",",").TrimEnd(",")}
 
-    # PS> 1010111,1110010,1101001,1110100,1100101,101101,1001111,1110101,1110100,1110000,1110101,1110100,100000,100111,1001101,1100001,1101100,1101001,1100011,1101001,1101111,1110101,1110011,100000,1100011,1101111,1100100,1100101,100000,1100101,1111000,1100101,1100011,1110101,1110100,1100101,1100100,100001,100111
+# PS> 1010111,1110010,1101001,1110100,1100101,101101,1001111,1110101,1110100,1110000,1110101,1110100,100000,100111,1001101,1100001,1101100,1101001,1100011,1101001,1101111,1110101,1110011,100000,1100011,1101111,1100100,1100101,100000,1100101,1111000,1100101,1100011,1110101,1110100,1100101,1100100,100001,100111
 
-    Invoke-Expression( -join (1010111,1110010,1101001,1110100,1100101,101101,1001111,1110101,1110100,1110000,1110101,1110100,100000,100111,1001101,1100001,1101100,1101001,1100011,1101001,1101111,1110101,1110011,100000,1100011,1101111,1100100,1100101,100000,1100101,1111000,1100101,1100011,1110101,1110100,1100101,1100100,100001,100111 | ForEach-Object { ([Convert]::ToInt16($_.ToString(),2) -as [char]) }))
+Invoke-Expression( -join (1010111,1110010,1101001,1110100,1100101,101101,1001111,1110101,1110100,1110000,1110101,1110100,100000,100111,1001101,1100001,1101100,1101001,1100011,1101001,1101111,1110101,1110011,100000,1100011,1101111,1100100,1100101,100000,1100101,1111000,1100101,1100011,1110101,1110100,1100101,1100100,100001,100111 | ForEach-Object { ([Convert]::ToInt16($_.ToString(),2) -as [char]) }))
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h3>Encryption</h3>
@@ -241,31 +225,29 @@ tags: [infosec]
 
 <p>A command can be obfuscated using XOR and converted back again. The following example performs an XOR operation on each byte of the instruction with the value '0x42'. The bytes can be reconverted with the same value and ASCII casting.</p>
 
-<div class="code">
-    [Text.Encoding]::UTF8.GetBytes("Write-Output 'Malicious code executed!'") | ForEach-Object { $_ -bxor 0x42 } | Out-String | ForEach-Object {$_.Replace("`n",",").TrimEnd(",")}
+<div class="code language-powershell">[Text.Encoding]::UTF8.GetBytes("Write-Output 'Malicious code executed!'") | ForEach-Object { $_ -bxor 0x42 } | Out-String | ForEach-Object {$_.Replace("`n",",").TrimEnd(",")}
 
-    # PS> 21,48,43,54,39,111,13,55,54,50,55,54,98,101,15,35,46,43,33,43,45,55,49,98,33,45,38,39,98,39,58,39,33,55,54,39,38,99,101
+# PS> 21,48,43,54,39,111,13,55,54,50,55,54,98,101,15,35,46,43,33,43,45,55,49,98,33,45,38,39,98,39,58,39,33,55,54,39,38,99,101
 
-    Invoke-Expression (-join (21,48,43,54,39,111,13,55,54,50,55,54,98,101,15,35,46,43,33,43,45,55,49,98,33,45,38,39,98,39,58,39,33,55,54,39,38,99,101 | ForEach-Object { [char]($_ -bxor 0x42) }))
+Invoke-Expression (-join (21,48,43,54,39,111,13,55,54,50,55,54,98,101,15,35,46,43,33,43,45,55,49,98,33,45,38,39,98,39,58,39,33,55,54,39,38,99,101 | ForEach-Object { [char]($_ -bxor 0x42) }))
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>SecureString (AES)</h4>
 
 <p>A command can be AES encrypted by using the SecureString function.</p>
 
-<div class="code">
-    # 16, 24 or 32 byte key size
-    $key = ([Text.Encoding]::Default.GetBytes("MySecretPassword"))
+<div class="code language-powershell"># 16, 24 or 32 byte key size
+$key = ([Text.Encoding]::Default.GetBytes("MySecretPassword"))
 
-    "Write-Output 'Malicious code executed!'" | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString -Key $key
+"Write-Output 'Malicious code executed!'" | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString -Key $key
 
-    # PS> 01000000d08c9ddf0115d1118c7a00c04fc297eb01000000178e91759fcacf468c330156d58c66bc000000000200000000001066000000010000200000003a3a0b242a307a48d03f6e105db3e209fa3b58021775721753365e5e72bc4f56000000000e8000000002000020000000cf4f9098c27d1aeeb7ba3ecd88252461b812830d3ea934b54e135c270c174a0e500000009e08b1ff1bc319d94ff2611253ecefdc46bb64e5a8a55ed2457cfc516ff6512cdebf9466e52452e4495e1582e2c048097fe6e317ad00692147dd03c8d6db7995028a534a807f22b44d720ebc80d9788a40000000c026f435426f31cdca4c087487fd32ea9ab53498ad8de3bfd2a73b27a59deb46f41c6670f3641a20323573e29ed04d0cc60d07ca3efcec0c6069bcda3d30edbb
+# PS> 01000000d08c9ddf0115d1118c7a00c04fc297eb01000000178e91759fcacf468c330156d58c66bc000000000200000000001066000000010000200000003a3a0b242a307a48d03f6e105db3e209fa3b58021775721753365e5e72bc4f56000000000e8000000002000020000000cf4f9098c27d1aeeb7ba3ecd88252461b812830d3ea934b54e135c270c174a0e500000009e08b1ff1bc319d94ff2611253ecefdc46bb64e5a8a55ed2457cfc516ff6512cdebf9466e52452e4495e1582e2c048097fe6e317ad00692147dd03c8d6db7995028a534a807f22b44d720ebc80d9788a40000000c026f435426f31cdca4c087487fd32ea9ab53498ad8de3bfd2a73b27a59deb46f41c6670f3641a20323573e29ed04d0cc60d07ca3efcec0c6069bcda3d30edbb
 
-    Invoke-Expression( ([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR( ("01000000d08c9ddf0115d1118c7a00c04fc297eb01000000178e91759fcacf468c330156d58c66bc000000000200000000001066000000010000200000003a3a0b242a307a48d03f6e105db3e209fa3b58021775721753365e5e72bc4f56000000000e8000000002000020000000cf4f9098c27d1aeeb7ba3ecd88252461b812830d3ea934b54e135c270c174a0e500000009e08b1ff1bc319d94ff2611253ecefdc46bb64e5a8a55ed2457cfc516ff6512cdebf9466e52452e4495e1582e2c048097fe6e317ad00692147dd03c8d6db7995028a534a807f22b44d720ebc80d9788a40000000c026f435426f31cdca4c087487fd32ea9ab53498ad8de3bfd2a73b27a59deb46f41c6670f3641a20323573e29ed04d0cc60d07ca3efcec0c6069bcda3d30edbb" | ConvertTo-SecureString -Key $key)))))
+Invoke-Expression( ([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR( ("01000000d08c9ddf0115d1118c7a00c04fc297eb01000000178e91759fcacf468c330156d58c66bc000000000200000000001066000000010000200000003a3a0b242a307a48d03f6e105db3e209fa3b58021775721753365e5e72bc4f56000000000e8000000002000020000000cf4f9098c27d1aeeb7ba3ecd88252461b812830d3ea934b54e135c270c174a0e500000009e08b1ff1bc319d94ff2611253ecefdc46bb64e5a8a55ed2457cfc516ff6512cdebf9466e52452e4495e1582e2c048097fe6e317ad00692147dd03c8d6db7995028a534a807f22b44d720ebc80d9788a40000000c026f435426f31cdca4c087487fd32ea9ab53498ad8de3bfd2a73b27a59deb46f41c6670f3641a20323573e29ed04d0cc60d07ca3efcec0c6069bcda3d30edbb" | ConvertTo-SecureString -Key $key)))))
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h3>Compression</h3>
@@ -276,42 +258,40 @@ tags: [infosec]
 
 <p>The command can be compressed and encoded as Base64. It can be decoded or decompressed in the reverse order.</p>
 
-<div class="code">
-    $memory_stream = New-Object IO.MemoryStream
-    $compressor = New-Object IO.Compression.DeflateStream($memory_stream, [IO.Compression.CompressionMode]::Compress)
+<div class="code language-powershell">$memory_stream = New-Object IO.MemoryStream
+$compressor = New-Object IO.Compression.DeflateStream($memory_stream, [IO.Compression.CompressionMode]::Compress)
 
-    $stream_writer = New-Object IO.StreamWriter($compressor)
-    $stream_writer.Write("Write-Output 'Malicious code executed!'")
-    $stream_writer.Close()
+$stream_writer = New-Object IO.StreamWriter($compressor)
+$stream_writer.Write("Write-Output 'Malicious code executed!'")
+$stream_writer.Close()
 
-    [System.Convert]::ToBase64String($memory_stream.ToArray())
+[System.Convert]::ToBase64String($memory_stream.ToArray())
 
-    # PS> Cy/KLEnV9S8tKSgtUVD3TczJTM7MLy1WSM5PSVVIrUhNLi1JTVFUBwA=
+# PS> Cy/KLEnV9S8tKSgtUVD3TczJTM7MLy1WSM5PSVVIrUhNLi1JTVFUBwA=
 
-    Invoke-Expression(New-Object IO.StreamReader((New-Object IO.Compression.DeflateStream([IO.MemoryStream][Convert]::FromBase64String("Cy/KLEnV9S8tKSgtUVD3TczJTM7MLy1WSM5PSVVIrUhNLi1JTVFUBwA="),[IO.Compression.CompressionMode]::Decompress)),[Text.Encoding]::ASCII)).ReadToEnd()
+Invoke-Expression(New-Object IO.StreamReader((New-Object IO.Compression.DeflateStream([IO.MemoryStream][Convert]::FromBase64String("Cy/KLEnV9S8tKSgtUVD3TczJTM7MLy1WSM5PSVVIrUhNLi1JTVFUBwA="),[IO.Compression.CompressionMode]::Decompress)),[Text.Encoding]::ASCII)).ReadToEnd()
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>GZip</h4>
 
 <p>The compression is done the same as in RAW except that the 'GZipStream' function is used.</p>
 
-<div class="code">
-    $memory_stream = New-Object IO.MemoryStream
-    $compressor = New-Object IO.Compression.GZipStream($memory_stream, [IO.Compression.CompressionMode]::Compress)
+<div class="code language-powershell">$memory_stream = New-Object IO.MemoryStream
+$compressor = New-Object IO.Compression.GZipStream($memory_stream, [IO.Compression.CompressionMode]::Compress)
 
-    $stream_writer = New-Object IO.StreamWriter($compressor)
-    $stream_writer.Write("Write-Output 'Malicious code executed!'")
-    $stream_writer.Close()
+$stream_writer = New-Object IO.StreamWriter($compressor)
+$stream_writer.Write("Write-Output 'Malicious code executed!'")
+$stream_writer.Close()
 
-    [System.Convert]::ToBase64String($memory_stream.ToArray())
+[System.Convert]::ToBase64String($memory_stream.ToArray())
 
-    # PS> H4sIAAAAAAAEAAsvyixJ1fUvLSkoLVFQ903MyUzOzC8tVkjOT0lVSK1ITS4tSU1RVAcAcDv1sCcAAAA=
+# PS> H4sIAAAAAAAEAAsvyixJ1fUvLSkoLVFQ903MyUzOzC8tVkjOT0lVSK1ITS4tSU1RVAcAcDv1sCcAAAA=
 
-    Invoke-Expression(New-Object IO.StreamReader((New-Object IO.Compression.GZipStream([IO.MemoryStream][Convert]::FromBase64String("H4sIAAAAAAAEAAsvyixJ1fUvLSkoLVFQ903MyUzOzC8tVkjOT0lVSK1ITS4tSU1RVAcAcDv1sCcAAAA="),[IO.Compression.CompressionMode]::Decompress)),[Text.Encoding]::ASCII)).ReadToEnd()
+Invoke-Expression(New-Object IO.StreamReader((New-Object IO.Compression.GZipStream([IO.MemoryStream][Convert]::FromBase64String("H4sIAAAAAAAEAAsvyixJ1fUvLSkoLVFQ903MyUzOzC8tVkjOT0lVSK1ITS4tSU1RVAcAcDv1sCcAAAA="),[IO.Compression.CompressionMode]::Decompress)),[Text.Encoding]::ASCII)).ReadToEnd()
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h3>Persistence</h3>
@@ -326,42 +306,39 @@ tags: [infosec]
 
 <p>The following code was saved in the user profile file, which is always executed automatically when Powershell is started.</p>
 
-<div class="code">
-    # Microsoft.PowerShell_profile.ps1
-    Write-Output "Malicious code automatically executed from: $($PSCommandPath)"
+<div class="code language-powershell"># Microsoft.PowerShell_profile.ps1
+Write-Output "Malicious code automatically executed from: $($PSCommandPath)"
 
-    # PS> Malicious code automatically executed from: C:\Users\Victim\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+# PS> Malicious code automatically executed from: C:\Users\Victim\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
 </div>
 
 <h4>Task Scheduler</h4>
 
 <p>Powershell code can be persisted and executed from the Task Scheduler. In the following a Powershell window with the output listed below is displayed every minute.</p>
 
-<div class="code">
-    $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-ep bypass -NoExit -c Write-Output 'Malicious code executed every minute!'"
+<div class="code language-powershell">$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-ep bypass -NoExit -c Write-Output 'Malicious code executed every minute!'"
 
-    $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 1)
+$trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 1)
 
-    $principal = New-ScheduledTaskPrincipal -UserId $env:username -LogonType Interactive
+$principal = New-ScheduledTaskPrincipal -UserId $env:username -LogonType Interactive
 
-    Register-ScheduledTask -TaskName "MALICIOUS" -Action $action -Trigger $trigger -Principal $principal
+Register-ScheduledTask -TaskName "MALICIOUS" -Action $action -Trigger $trigger -Principal $principal
 
-    # PS> Malicious code executed every minute!
+# PS> Malicious code executed every minute!
 </div>
 
 <h4>Registry</h4>
 
 <p>Powershell code can also be stored in the Registry. Here the command is first base64-encoded and stored in a newly created registry key 'XXX'. The value can then be read out with Powershell.</p>
 
-<div class="code">
-    $reg_val = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes("Write-Output 'Malicious code executed!'"))
+<div class="code language-powershell">$reg_val = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes("Write-Output 'Malicious code executed!'"))
 
-    New-Item "HKCU:\SOFTWARE" -Name "Malsoft"
-    New-ItemProperty "HKCU:\SOFTWARE\Malsoft" -Name "XXX" -Value $reg_val
+New-Item "HKCU:\SOFTWARE" -Name "Malsoft"
+New-ItemProperty "HKCU:\SOFTWARE\Malsoft" -Name "XXX" -Value $reg_val
 
-    powershell -EncodedCommand (Get-ItemProperty "HKCU:\SOFTWARE\Malsoft" -Name "XXX").XXX
+powershell -EncodedCommand (Get-ItemProperty "HKCU:\SOFTWARE\Malsoft" -Name "XXX").XXX
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>Environmentvariable</h4>
@@ -370,27 +347,25 @@ tags: [infosec]
 
 <p>In the following example the environment variable 'XXX' is created, where a base64-encoded Powershell command is stored. The command can then be invoked using the environment variable value.</p>
 
-<div class="code">
-    $env_var = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes("Write-Output 'Malicious code executed!'"))
-    
-    [Environment]::SetEnvironmentVariable("XXX", $env_var, [EnvironmentVariableTarget]::User)
+<div class="code language-powershell">$env_var = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes("Write-Output 'Malicious code executed!'"))
 
-    powershell -EncodedCommand ([Environment]::GetEnvironmentVariable("XXX"))
+[Environment]::SetEnvironmentVariable("XXX", $env_var, [EnvironmentVariableTarget]::User)
 
-    # PS> Malicious code executed!
+powershell -EncodedCommand ([Environment]::GetEnvironmentVariable("XXX"))
+
+# PS> Malicious code executed!
 </div>
 
 <p>Environment variables can also be used in this way to create a Cmdlet or a command from individual characters.</p>
 
 <p>In the following the abbreviation for the Invoke-Expression Cmdlet 'iex' is created of the ComSpec environment variable from the 4th, 26th and 25th character (counted from 0).</p>
 
-<div class="code">
-    $env:ComSpec
-    # PS> C:\Windows\system32\cmd.exe
+<div class="code language-powershell">$env:ComSpec
+# PS> C:\Windows\system32\cmd.exe
 
-    &($env:ComSpec[4,26,25]-join'') ("Write-Output 'Malicious code executed!'")
+&($env:ComSpec[4,26,25]-join'') ("Write-Output 'Malicious code executed!'")
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h4>Windows Management Instrumentation (WMI)</h4>
@@ -399,36 +374,35 @@ tags: [infosec]
 
 <p>The following code sets an Event Filter, that triggers every minute at second 42. This filter is connected to a 'CommandLineEventConsumer', which executes the obfuscated PowerShell code, which leads to the output via 'msg.exe'. The configuration saved in this way remains also active after a system restart.</p>
 
-<div class="code">
-    # Filter
-    $filter = Set-WmiInstance -Namespace "root\subscription" 
-    -Class "__EventFilter" 
-    -Arguments @{
-        Name = "MyEventFilter"
-        EventNameSpace = "root\cimv2"
-        QueryLanguage = "WQL"
-        Query = "SELECT * FROM __InstanceModificationEvent WHERE TargetInstance ISA 'Win32_LocalTime' AND TargetInstance.Second=42"
-    }
+<div class="code language-powershell"># Filter
+$filter = Set-WmiInstance -Namespace "root\subscription" 
+-Class "__EventFilter" 
+-Arguments @{
+    Name = "MyEventFilter"
+    EventNameSpace = "root\cimv2"
+    QueryLanguage = "WQL"
+    Query = "SELECT * FROM __InstanceModificationEvent WHERE TargetInstance ISA 'Win32_LocalTime' AND TargetInstance.Second=42"
+}
 
-    # Consumer
-    $consumer = Set-WmiInstance -Namespace "root\subscription" 
-    -Class "CommandLineEventConsumer" 
-    -Arguments @{
-        Name = "MyEventConsumer"
-        CommandLineTemplate = "powershell.exe -ExecutionPolicy Bypass
-        -EncodedCommand bQBzAGcALgBlAHgAZQAgACoAIAAnAE0AYQBsAGkAYwBpAG8AdQBzACAAYwBvAGQAZQAgAGUAeABlAGMAdQB0AGUAZAAhACcA"
-    }
+# Consumer
+$consumer = Set-WmiInstance -Namespace "root\subscription" 
+-Class "CommandLineEventConsumer" 
+-Arguments @{
+    Name = "MyEventConsumer"
+    CommandLineTemplate = "powershell.exe -ExecutionPolicy Bypass
+    -EncodedCommand bQBzAGcALgBlAHgAZQAgACoAIAAnAE0AYQBsAGkAYwBpAG8AdQBzACAAYwBvAGQAZQAgAGUAeABlAGMAdQB0AGUAZAAhACcA"
+}
 
-    # Binding
-    Set-WmiInstance -Namespace "root\subscription"
-    -Class "__FilterToConsumerBinding"
-    -Arguments @{
-        Filter = $filter
-        Consumer = $consumer
-    }
+# Binding
+Set-WmiInstance -Namespace "root\subscription"
+-Class "__FilterToConsumerBinding"
+-Arguments @{
+    Filter = $filter
+    Consumer = $consumer
+}
 </div>
 
-<div class="code">
+<div class="inline-container">
     <img src="/assets/img/blog/msg-exe.png" alt="message output">
 </div>
 
@@ -438,12 +412,11 @@ tags: [infosec]
 
 <p>In the following a base64-encoded command is written to another stream of a regular file named 'hidden', which then can be executed by getting the contents of this hidden stream.</p>
 
-<div class="code">
-    Set-Content '.\RegularFile.txt' -Stream hidden -Value "VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAE0AYQBsAGkAYwBpAG8AdQBzACAAYwBvAGQAZQAgAGUAeABlAGMAdQB0AGUAZAAhACcA"
+<div class="code language-powershell">Set-Content '.\RegularFile.txt' -Stream hidden -Value "VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAE0AYQBsAGkAYwBpAG8AdQBzACAAYwBvAGQAZQAgAGUAeABlAGMAdQB0AGUAZAAhACcA"
 
-    powershell -ec (Get-Content '.\RegularFile.txt' -Stream 'hidden')
+powershell -ec (Get-Content '.\RegularFile.txt' -Stream 'hidden')
 
-    # PS> Malicious code executed!
+# PS> Malicious code executed!
 </div>
 
 <h3>Tools</h3>
@@ -454,23 +427,21 @@ tags: [infosec]
 
 <p>Since Powershell 5 the call to arguments and commands of typical obfuscated scripts - such as 'Bypass', 'FromBase64String', 'DeflateStream' - are automatically logged along with its contents at the warning level in the following event log under event ID 4104.</p>
 
-<div class="code">
-    Microsoft-Windows-PowerShell%4Operational.evtx
+<div class="code language-text">Microsoft-Windows-PowerShell%4Operational.evtx
 </div>
 
-<div class="code">
+<div class="inline-container">
     <img src="/assets/img/blog/powershell_obfs_evt1.png" alt="eventlog output">
 </div>
 
 <p>To get more inside of the logged obfuscated script, it is recommended to turn on 'Script Block Logging' in the Group Policy.</p>
 
-<div class="code">
-    Group Policy > Computer Configuration > Administrative Templates > Windows PowerShell > Turn on PowerShell Script Block Logging
+<div class="code language-text">Group Policy > Computer Configuration > Administrative Templates > Windows PowerShell > Turn on PowerShell Script Block Logging
 </div>
 
 <p>By activating 'Script Block Logging' the resolved script block layers are additionally logged at the verbose level under event ID 4104</p>
 
-<div class="code">
+<div class="inline-container">
     <img src="/assets/img/blog/powershell_obfs_evt2.png" alt="eventlog output">
 </div>
 
@@ -484,51 +455,45 @@ tags: [infosec]
 
 <p>In the following example the script blocks of the Powershell Eventlog are extracted through 'Get-RvoScriptBlock' and then analyzed through 'Measure-RvoObfuscation'.</p>
 
-<div class="code">
-    $skriptblock = Get-WinEvent Microsoft-Windows-PowerShell/Operational | Get-RvoScriptBlock | Measure-RvoObfuscation -Verbose
+<div class="code language-powershell">$skriptblock = Get-WinEvent Microsoft-Windows-PowerShell/Operational | Get-RvoScriptBlock | Measure-RvoObfuscation -Verbose
 </div>
 
 <p>The output shows the recognized obfuscated scripts and their hash values.</p>
 
-<div class="code">
-    ...
-    [34 of 46] NOT OBFUSCATED :: (34496E64527BF40DEAD53CF193D97E55F3...)
-    [35 of 46] NOT OBFUSCATED :: (B5CA27664A1E634B4E551F638FF3A4ACD9...)
-    [36 of 46] OBFUSCATED :: (FF19200070919B612CAFDDBC1F03541FAE...)
-    [37 of 46] OBFUSCATED :: (25E323F9DA18AC845E1C436538C74A2D82...)
-    ...
+<div class="customcode">...
+<span class="green">[34 of 46] NOT OBFUSCATED ::</span> (34496E64527BF40DEAD53CF193D97E55F3...)
+<span class="green">[35 of 46] NOT OBFUSCATED ::</span> (B5CA27664A1E634B4E551F638FF3A4ACD9...)
+<span class="red">[36 of 46] OBFUSCATED ::</span> (FF19200070919B612CAFDDBC1F03541FAE...)
+<span class="red">[37 of 46] OBFUSCATED ::</span> (25E323F9DA18AC845E1C436538C74A2D82...)
+...
 </div>
 
 <p>The scripts can been viewed over the index (-1) of the previously defined variable.</p>
 
-<div class="code">
-    $skript_block[35].Source
-    # @{ScriptBlock=.("{0}{2}{1}"-f'seT','item','-') ('vaRI'+'ABLE'+':U'+'7…
+<div class="code language-powershell">$skript_block[35].Source
+# @{ScriptBlock=.("{0}{2}{1}"-f'seT','item','-') ('vaRI'+'ABLE'+':U'+'7…
 </div>
 
 <h4>Chainsaw, Hayabusa</h4>
 
 <p><a href="https://github.com/WithSecureLabs/chainsaw">Chainsaw</a> and <a href="https://github.com/Yamato-Security/hayabusa">Hayabusa</a> are both CLI applications, which are working with Sigma rules to scan one or more Eventlogs. The applications can be executed with the following commands to scan for suspicious Powershell code:</p>
 
-<div class="code">
-    chainsaw-2.5.0.exe hunt ".\Microsoft-Windows-PowerShell%4Operational.evtx" -s sigma/ --mapping mappings/sigma-event-logs-all.yml
+<div class="customcode"><span class="green">chainsaw-2.5.0.exe</span> hunt <span class="purple">".\Microsoft-Windows-PowerShell%4Operational.evtx"</span> -s sigma/ --mapping mappings/sigma-event-logs-all.yml
 </div>
 
-<div class="code">
-    hayabusa-2.2.2.exe csv-timeline -f ".\Microsoft-Windows-PowerShell%4Operational.evtx"
+<div class="customcode"><span class="green">hayabusa-2.2.2.exe</span> csv-timeline -f <span class="purple">".\Microsoft-Windows-PowerShell%4Operational.evtx"</span>
 </div>
 
 <p>Besides obfuscation rules, there are several other rules for suspicious Powershell code among others:</p>
 
-<div class="code">
-    Rule                                                Suspicious Script
-    ----                                                -----------------
-    Powershell Token Obfuscation                        obfuscated.ps1
-    Change PowerShell Policies to an Insecure Level     obfuscated.ps1
-    Malicious PowerShell Keywords                       obfuscated.ps1
-    Potential WinAPI Calls Via PowerShell Scripts       obfuscated.ps1
-    Suspicious PowerShell Keywords                      obfuscated.ps1
-    ...
+<div class="code language-text">Rule                                                Suspicious Script
+----                                                -----------------
+Powershell Token Obfuscation                        obfuscated.ps1
+Change PowerShell Policies to an Insecure Level     obfuscated.ps1
+Malicious PowerShell Keywords                       obfuscated.ps1
+Potential WinAPI Calls Via PowerShell Scripts       obfuscated.ps1
+Suspicious PowerShell Keywords                      obfuscated.ps1
+...
 </div>
 
 <h4>THOR</h4>

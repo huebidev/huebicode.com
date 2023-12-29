@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
     <link rel="stylesheet" href="/assets/css/style.css">
+    {% if page.code == true %}<link rel="stylesheet" href="/assets/highlight/monokai-sublime.min.css">{% endif %}
     {% feed_meta %}
     {% seo %}
     <title>{{ page.title }}</title>
@@ -26,6 +27,12 @@
     {% include _search-loader.html %}
 {% elsif page.url == "/thank-you-for-your-donation.html" %}
     <script src="/assets/js/confetti.js"></script>
+{% endif %}
+
+{% if page.code == true %}
+    <script src="/assets/highlight/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="/assets/highlight/highlight-div-class-code.js"></script>
 {% endif %}
 
 </html>

@@ -451,6 +451,14 @@ p {
     margin-top: var(--medium-margin);
 }
 
+h3 + p {
+    margin-top: var(--small-margin);
+}
+
+h4 + p {
+    margin-top: var(--small-margin);
+}
+
 a {
     text-decoration: none;
     color: var(--fg-color-heading);
@@ -686,14 +694,6 @@ footer {
 .br-top, .br-bottom {
     margin-top: var(--large-margin);
     height: 1px;
-}
-
-.code {
-    font-size: 1rem;
-    border: 1px solid grey;
-    color: grey;
-    margin-top: var(--medium-margin);
-    margin-bottom: var(--medium-margin);
 }
 
 .download-btns {

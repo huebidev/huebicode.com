@@ -5,7 +5,7 @@ module Jekyll
 
             doc = Nokogiri::HTML.fragment(input)
 
-            doc.css('h1', 'h2', 'h3', 'h4', 'h5', 'h6').each(&:remove)
+            doc.css('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'time').each(&:remove)
 
             doc.to_s
         end
