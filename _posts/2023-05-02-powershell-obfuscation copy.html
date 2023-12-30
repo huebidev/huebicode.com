@@ -1,10 +1,17 @@
 ---
-layout: post
 title: Powershell Obfuscation
 tags: [infosec]
 code: true
+aside_width: true
 ---
-<h3>Intro</h3>
+<article>
+    
+    <header class="blog-header">
+        <h1 class="blog-post-title">{{ page.title }}</h1>
+        <time datetime="{{ page.date | date: '%Y-%m-%d'}}">{{ page.date | date: "%d.%m.%Y"}}</time>
+    </header>
+
+<h3 id="intro">Intro</h3>
 
 <p>Due to its deep roots on Windows systems and access to .NET libraries, Powershell is a powerful tool for administrators and attackers alike. It offers a wide range of possibilities to write regular and malicious script code and obfuscate it to the point of unreadability and undetectability by antiviruses. Moreover the code can be executed directly in memory, so that no files and further traces are left on the drive.</p>
 
@@ -14,11 +21,11 @@ code: true
 
 <p>In this blog post I will show many of the attacker methods to obfuscate and hide malicious Powershell code and how to detect and analyze it. The shown obfuscation techniques must not stand alone but can also be used in combination.</p>
 
-<h3>Powershell</h3>
+<h3 id="powershell">Powershell</h3>
 
 <p>Powershell offers a variety of ways to obfuscate the script code. In the following the language-specific features of Powershell are described, that are suitable for script obfuscation.</p>
 
-<h4>Function Overwriting</h4>
+<h4 id="functionoverwriting">Function Overwriting</h4>
 
 <p>Powershell offers built-in functions (Cmdlets) that can be overridden in the profiles. This way malicious code can be added to a regular Cmdlet, which is executed in the background when the Cmdlet is called.</p>
 
@@ -44,7 +51,7 @@ code: true
 # [+] Malicious code executed!
 </div>
 
-<h4>Aliases</h4>
+<h4 id="aliases">Aliases</h4>
 
 <p>Powershell allows a large number of alternative notations and abbreviations for built-in functions, which can be viewed using the 'Get-Alias' command. Parameters can also be abbreviated as desired, as long as there are no ambiguities (e.g. 'ExecutionPolicy' to 'ep' or 'exe'). All of the commands listed below result in identical output.</p>
 
@@ -55,7 +62,7 @@ echo "Malicious code executed!"
 # PS> Malicious code executed!
 </div>
 
-<h4>Calloperators, Wildcards</h4>
+<h4 id="calloperators-wildcards">Calloperators, Wildcards</h4>
 
 <p>With the call operators ('&' or '.') a function can be called. In combination with the 'Get-Command' function (abbr. 'gcm'), which enables the command search with the wildcard character '*', a command call can be shortened and thus obfuscated.</p>
 
@@ -64,7 +71,7 @@ echo "Malicious code executed!"
 # PS> Malicious code executed!
 </div>
 
-<h4>Case, Escape-, Whitespacecharacters</h4>
+<h4 id="case-escape-whitespacechars">Case, Escape-, Whitespacecharacters</h4>
 
 <p>There is no distinction between upper and lower case. Spaces are ignored regardless of their length, allowing malicious code to be hidden at the end of a regular command. The backtick '`' is used as an escape character. Unless this is used before a predefined character such as '`n' for a new line or '`t' for a tab, it is also ignored.</p>
 
@@ -73,7 +80,7 @@ echo "Malicious code executed!"
 # PS> Malicious code executed!
 </div>
 
-<h4>.NET-Functions</h4>
+<h4 id="net-functions">.NET-Functions</h4>
 
 <p>Through .NET access, the .NET functions can also be addressed instead of native Powershell functions.</p>
 
@@ -82,7 +89,7 @@ echo "Malicious code executed!"
 # PS> Malicious code executed!
 </div>
 
-<h4>Specialcharacters</h4>
+<h4 id="specialchars">Specialcharacters</h4>
 
 <p>Another obfuscation option is to assign special character variables '${}' to integers, which can be incremented through the increment operator '++' and casted to suitable characters. The special variable assignment using '${}' allows the use of special characters (including spaces) as variable identifiers. The cast operator and required Cmdlets - such as 'iex' - can be assembled using the subexpression operator '$()', method resolutions and array index operators.</p>
 
@@ -107,11 +114,11 @@ echo "Malicious code executed!"
 # PS> Malicious code executed!
 </div>
 
-<h3>Strings</h3>
+<h3 id="strings">Strings</h3>
 
 <p>In the following common string obfuscation techniques are shown, which can be used with any programming language in this or similar form.</p>
 
-<h4>Chaining</h4>
+<h4 id="chaining">Chaining</h4>
 
 <p>Characters can be concatenated by '-split', '-join' or the '+' sign.</p>
 
@@ -121,7 +128,7 @@ Write-Output ("MaliciousXXXcodeXXXexecuted!" -split "XXX" -join " ")
 # PS> Malicious code executed!
 </div>
 
-<h4>Replacing</h4>
+<h4 id="replacing">Replacing</h4>
 
 <p>Character strings can be exchanged using the '-replace' option.</p>
 
@@ -130,7 +137,7 @@ Write-Output ("MaliciousXXXcodeXXXexecuted!" -split "XXX" -join " ")
 # PS> Malicious code executed!
 </div>
 
-<h4>Formatoperator</h4>
+<h4 id="formatoperator">Formatoperator</h4>
 
 <p>The format operator '-f' can be used to rearrange strings based on number order.</p>
 
@@ -139,7 +146,7 @@ Write-Output ("MaliciousXXXcodeXXXexecuted!" -split "XXX" -join " ")
 # PS> Malicious code executed!
 </div>
 
-<h4>Reversing</h4>
+<h4 id="reversing">Reversing</h4>
 
 <p>Characters can be reversed via array slicing.</p>
 
@@ -148,11 +155,11 @@ Write-Output ("MaliciousXXXcodeXXXexecuted!" -split "XXX" -join " ")
 # PS> Malicious code executed!
 </div>
 
-<h3>Encoding</h3>
+<h3 id="encoding">Encoding</h3>
 
 <p>Obfuscation can also be achieved using common encoding methods.</p>
 
-<h4>Base64</h4>
+<h4 id="base64">Base64</h4>
 
 <p>The code to be executed can be encoded and passed to Base64. The command encoded in this way can be started via Powershell with the '-EncodedCommand' option.</p>
 
@@ -165,7 +172,7 @@ powershell -EncodedCommand "VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAE0AYQBsAGkAYwBp
 # PS> Malicious code executed!
 </div>
 
-<h4>ASCII</h4>
+<h4 id="ascii">ASCII</h4>
 
 <p>ASCII-encoded commands can be executed after a byte conversion, for example via 'Invoke-Expression'.</p>
 
@@ -178,7 +185,7 @@ Invoke-Expression( -join [char[]](87,114,105,116,101,45,79,117,116,112,117,116,3
 # PS> Malicious code executed!
 </div>
 
-<h4>Hex</h4>
+<h4 id="hex">Hex</h4>
 
 <p>The use of hex encoding is possible in a similar way.</p>
 
@@ -191,7 +198,7 @@ Invoke-Expression( -join ('57','72','69','74','65','2D','4F','75','74','70','75'
 # PS> Malicious code executed!
 </div>
 
-<h4>Octal</h4>
+<h4 id="octal">Octal</h4>
 
 <p>Similar with octal encoding.</p>
 
@@ -204,7 +211,7 @@ Invoke-Expression( -join (127,162,151,164,145,55,117,165,164,160,165,164,40,47,1
 # PS> Malicious code executed!
 </div>
 
-<h4>Binary</h4>
+<h4 id="binary">Binary</h4>
 
 <p>And the same with binary encoding.</p>
 
@@ -217,11 +224,11 @@ Invoke-Expression( -join (1010111,1110010,1101001,1110100,1100101,101101,1001111
 # PS> Malicious code executed!
 </div>
 
-<h3>Encryption</h3>
+<h3 id="encryption">Encryption</h3>
 
 <p>XOR- and SecureString encryption are shown below. Because of the .NET interface all the other .NET encryption algorithms can also be used with Powershell.</p>
 
-<h4>XOR</h4>
+<h4 id="xor">XOR</h4>
 
 <p>A command can be obfuscated using XOR and converted back again. The following example performs an XOR operation on each byte of the instruction with the value '0x42'. The bytes can be reconverted with the same value and ASCII casting.</p>
 
@@ -234,7 +241,7 @@ Invoke-Expression (-join (21,48,43,54,39,111,13,55,54,50,55,54,98,101,15,35,46,4
 # PS> Malicious code executed!
 </div>
 
-<h4>SecureString (AES)</h4>
+<h4 id="securestring">SecureString (AES)</h4>
 
 <p>A command can be AES encrypted by using the SecureString function.</p>
 
@@ -250,11 +257,11 @@ Invoke-Expression( ([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.
 # PS> Malicious code executed!
 </div>
 
-<h3>Compression</h3>
+<h3 id="compression">Compression</h3>
 
 <p>In Powershell the RAW- and GZip compressions are mainly used.</p>
 
-<h4>RAW</h4>
+<h4 id="raw">RAW</h4>
 
 <p>The command can be compressed and encoded as Base64. It can be decoded or decompressed in the reverse order.</p>
 
@@ -274,7 +281,7 @@ Invoke-Expression(New-Object IO.StreamReader((New-Object IO.Compression.DeflateS
 # PS> Malicious code executed!
 </div>
 
-<h4>GZip</h4>
+<h4 id="gzip">GZip</h4>
 
 <p>The compression is done the same as in RAW except that the 'GZipStream' function is used.</p>
 
@@ -294,13 +301,13 @@ Invoke-Expression(New-Object IO.StreamReader((New-Object IO.Compression.GZipStre
 # PS> Malicious code executed!
 </div>
 
-<h3>Persistence</h3>
+<h3 id="persistence">Persistence</h3>
 
 <p>Powershell code can be hidden at operating system level, so that no malicious script files have to be applied to the victim system. This way persistence can be achieved on the system or the anti-virus protection can be bypassed.</p>
 
 <p>The following shows ways in which Powershell code can be applied to the system and executed without dropping files.</p>
 
-<h4>Profile</h4>
+<h4 id="profile">Profile</h4>
 
 <p>As described at 'Function Overwriting' the native Powershell functions can be overwritten system- and user-wide using Powershell profiles. This way malicious code can be executed automatically as soon as Powershell is started. An automated start of Powershell in the background can be forced via the Task Scheduler or WMI for example.</p>
 
@@ -312,7 +319,7 @@ Write-Output "Malicious code automatically executed from: $($PSCommandPath)"
 # PS> Malicious code automatically executed from: C:\Users\Victim\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
 </div>
 
-<h4>Task Scheduler</h4>
+<h4 id="scheduler">Task Scheduler</h4>
 
 <p>Powershell code can be persisted and executed from the Task Scheduler. In the following a Powershell window with the output listed below is displayed every minute.</p>
 
@@ -327,7 +334,7 @@ Register-ScheduledTask -TaskName "MALICIOUS" -Action $action -Trigger $trigger -
 # PS> Malicious code executed every minute!
 </div>
 
-<h4>Registry</h4>
+<h4 id="registry">Registry</h4>
 
 <p>Powershell code can also be stored in the Registry. Here the command is first base64-encoded and stored in a newly created registry key 'XXX'. The value can then be read out with Powershell.</p>
 
@@ -341,7 +348,7 @@ powershell -EncodedCommand (Get-ItemProperty "HKCU:\SOFTWARE\Malsoft" -Name "XXX
 # PS> Malicious code executed!
 </div>
 
-<h4>Environmentvariable</h4>
+<h4 id="environmentvariable">Environmentvariable</h4>
 
 <p>The environment variables also offer the possibility to save Powershell code.</p>
 
@@ -368,7 +375,7 @@ powershell -EncodedCommand ([Environment]::GetEnvironmentVariable("XXX"))
 # PS> Malicious code executed!
 </div>
 
-<h4>Windows Management Instrumentation (WMI)</h4>
+<h4 id="wmi">Windows Management Instrumentation (WMI)</h4>
 
 <p>Windows Management Instrumentation offers the possibility of reacting to specific events using Event Filters, such as logging onto a system, the start of a specific process or the reaching of a specific date and time. This event can then be linked to an Consumeraction, which can be used to execute PowerShell code.</p>
 
@@ -406,7 +413,7 @@ Set-WmiInstance -Namespace "root\subscription"
     <img src="/assets/img/blog/msg-exe.png" alt="message output">
 </div>
 
-<h4>Alternate Data Streams (ADS)</h4>
+<h4 id="ads">Alternate Data Streams (ADS)</h4>
 
 <p>ADS is an NTFS feature, which allows to append several data streams to a file. The default data stream is stored in the '$DATA' attribute.</p>
 
@@ -419,11 +426,11 @@ powershell -ec (Get-Content '.\RegularFile.txt' -Stream 'hidden')
 # PS> Malicious code executed!
 </div>
 
-<h3>Tools</h3>
+<h3 id="tools">Tools</h3>
 
 <p>This section describes some tools to detect and analyze obfuscated Powershell code.</p>
 
-<h4>Eventlog</h4>
+<h4 id="eventlog">Eventlog</h4>
 
 <p>Since Powershell 5 the call to arguments and commands of typical obfuscated scripts - such as 'Bypass', 'FromBase64String', 'DeflateStream' - are automatically logged along with its contents at the warning level in the following event log under event ID 4104.</p>
 
@@ -447,7 +454,7 @@ powershell -ec (Get-Content '.\RegularFile.txt' -Stream 'hidden')
 
 <p>For an even deeper logging of Powershell scripts the 'Module Logging' and 'PowerShell Transcription' can also be activated in the Group Policy.</p>
 
-<h4>Revoke-Obfuscation</h4>
+<h4 id="revoke-obfuscation">Revoke-Obfuscation</h4>
 
 <p><a href="https://github.com/danielbohannon/Revoke-Obfuscation">Revoke-Obfuscation</a> is a Powershell module by Daniel Bohannon, which is using two main functions 'Get-RvoScriptBlock' and 'Measure-RvoObfuscation'.</p>
 
@@ -474,7 +481,7 @@ powershell -ec (Get-Content '.\RegularFile.txt' -Stream 'hidden')
 # @{ScriptBlock=.("{0}{2}{1}"-f'seT','item','-') ('vaRI'+'ABLE'+':U'+'7…
 </div>
 
-<h4>Chainsaw, Hayabusa</h4>
+<h4 id="chainsaw-hayabusa">Chainsaw, Hayabusa</h4>
 
 <p><a href="https://github.com/WithSecureLabs/chainsaw">Chainsaw</a> and <a href="https://github.com/Yamato-Security/hayabusa">Hayabusa</a> are both CLI applications, which are working with Sigma rules to scan one or more Eventlogs. The applications can be executed with the following commands to scan for suspicious Powershell code:</p>
 
@@ -496,10 +503,64 @@ Suspicious PowerShell Keywords                      obfuscated.ps1
 ...
 </div>
 
-<h4>THOR</h4>
+<h4 id="thor">THOR</h4>
 
 <p><a href="https://www.nextron-systems.com/thor/">THOR</a> and the free <a href="https://www.nextron-systems.com/thor-lite/">THOR-lite</a> CLI applications are also working with Sigma rules. Furthermore they are using YARA rules, so obfuscated or suspicious Powershell code can be recognized in other files. For example in LNK files, which can contain malicious Powershell code to load further code or files.</p>
 
-<h4>PSDecode</h4>
+<h4 id="psdecode">PSDecode</h4>
 
 <p><a href="https://github.com/R3MRUM/PSDecode">PSDecode</a> is a helpful Powershell module when analyzing obfuscated Powershell code manually. It can recognize and reverse typical obfuscation techniques - like base64- or string obfuscation - so the analyzed code can become much more readable for further analysis.</p>
+
+</article>
+
+<div id="outline-wrapper">
+    <div id="outline">
+        <dl>
+            <dt><a href="#intro">Intro</a></dt>
+
+            <dt><a href="#powershell">Powershell</a></dt>
+            <dd><a href="#functionoverwriting">Function Overwriting</a></dd>
+            <dd><a href="#aliases">Aliases</a></dd>
+            <dd><a href="#calloperators-wildcards">Calloperators, Wildcards</a></dd>
+            <dd><a href="#case-escape-whitespacechars">Case, Escape-, Whitespacechars</a></dd>
+            <dd><a href="#net-functions">.NET-Functions</a></dd>
+            <dd><a href="#specialchars">Specialchars</a></dd>
+
+            <dt><a href="#strings">Strings</a></dt>
+            <dd><a href="#chaining">Chaining</a></dd>
+            <dd><a href="#replacing">Replacing</a></dd>
+            <dd><a href="#formatoperator">Formatoperator</a></dd>
+            <dd><a href="#reversing">Reversing</a></dd>
+
+            <dt><a href="#encoding">Encoding</a></dt>
+            <dd><a href="#base64">Base64</a></dd>
+            <dd><a href="#ascii">ASCII</a></dd>
+            <dd><a href="#hex">Hex</a></dd>
+            <dd><a href="#octal">Octal</a></dd>
+            <dd><a href="#binary">Binary</a></dd>
+
+            <dt><a href="#encryption">Encryption</a></dt>
+            <dd><a href="#xor">XOR</a></dd>
+            <dd><a href="#securestring">SecureString (AES)</a></dd>
+
+            <dt><a href="#compression">Compression</a></dt>
+            <dd><a href="#raw">RAW</a></dd>
+            <dd><a href="#gzip">GZip</a></dd>
+
+            <dt><a href="#persistence">Persistence</a></dt>
+            <dd><a href="#profile">Profile</a></dd>
+            <dd><a href="#scheduler">Task Scheduler</a></dd>
+            <dd><a href="#registry">Registry</a></dd>
+            <dd><a href="#environmentvariable">Environmentvar</a></dd>
+            <dd><a href="#wmi">WMI</a></dd>
+            <dd><a href="#ads">ADS</a></dd>
+
+            <dt><a href="#tools">Tools</a></dt>
+            <dd><a href="#eventlog">Eventlog</a></dd>
+            <dd><a href="#revoke-obfuscation">Revoke-Obfuscation</a></dd>
+            <dd><a href="#chainsaw-hayabusa">Chainsaw, Hayabusa</a></dd>
+            <dd><a href="#thor">THOR</a></dd>
+            <dd><a href="#psdecode">PSDecode</a></dd>
+        </dl>
+    </div>
+</div>

@@ -1,13 +1,11 @@
 ---
 layout: default
 ---
-<article class="content-grid full-width">
-
+<article>
     <header class="blog-header">
         <h1 class="blog-post-title">{{ page.title }}</h1>
         <time datetime="{{ page.date | date: '%Y-%m-%d'}}">{{ page.date | date: "%d.%m.%Y"}}</time>
     </header>
 
     {{ content }}
-
 </article>
