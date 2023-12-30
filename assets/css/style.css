@@ -50,10 +50,13 @@ input[type="search"]::-webkit-search-cancel-button {
     --blur: blur(2px);
 
     --dark-color: rgb(66,66,66);
+    --dark-code-color: rgb(133,133,133);
+    --light-color: rgb(220,220,220);
+    --blue-code-color: rgb(78,194,248);
     --blue-highlight-color: rgb(23,182,255);
     --blue-color: rgb(20,155,217);
-    --red-color: rgb(142, 229, 156);
-    --green-color: rgb(142, 229, 156);
+    --red-color: rgb(255,75,92);
+    --green-color: rgb(134,223,148);
     --purple-color: rgb(255, 52, 127);
     
     --fade-in: fadeInAnimation ease 0.7s;
@@ -114,6 +117,10 @@ html {
 
 .round-border {
     border-radius: var(--round-border);
+}
+
+.active-toc {
+    color: var(--green-color) !important;
 }
 
 /* COLORS --------------------------------------------------------------------*/
@@ -290,7 +297,7 @@ html {
                 }
                 
                 & dt a:hover {
-                    color: #8EE59C !important;
+                    color: var(--green-color)!important;
                 }
 
                 & dd {
@@ -303,7 +310,7 @@ html {
                 }
 
                 & dd a:hover {
-                    color: #8EE59C !important;
+                    color: var(--green-color) !important;
                 }
             }
 
