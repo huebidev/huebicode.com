@@ -1,5 +1,8 @@
 name: huebicode
 
+url: "https://huebicode.com"
+baseurl: ""
+
 plugins:
   - jekyll-sitemap
   - jekyll-feed
