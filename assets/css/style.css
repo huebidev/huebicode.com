@@ -27,6 +27,7 @@ input[type="search"]::-webkit-search-cancel-button {
 /* GLOBAL VARS ---------------------------------------------------------------*/
 :root {
     --aside-width: 0px;
+    --round-border: 8px;
 
     --main-font-family: "InconsolataVar";
     --main-font-size: 1.5rem;
@@ -111,6 +112,9 @@ html {
     scroll-behavior: smooth;
 }
 
+.round-border {
+    border-radius: var(--round-border);
+}
 
 /* COLORS --------------------------------------------------------------------*/
 .blue {
