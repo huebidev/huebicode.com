@@ -351,8 +351,11 @@ html {
                         & ul {
                             display: flex;
                             flex-wrap: wrap;
+                            gap: 6px;
 
                             & li {
+                                vertical-align: bottom;
+                                line-height: 1.2;
 
                                 & a {
                                     border: none;
@@ -361,14 +364,14 @@ html {
                                         font-size: .85rem;
                                         cursor: pointer;
                                         user-select: none;
-                                        margin-right: 4px;
+                                        /* margin-right: 4px; */
                                         padding: 6px 8px;
 
                                         color: var(--fg-color-dark);
                                         border: 1px solid var(--dark-color);
                                         border-radius: 24px;
                                         background-color: transparent;
-                                        transition: all .2s ease-in-out;
+                                        transition: color .2s ease-in-out;
 
                                         &.filter-label-checked {
                                             color: var(--bg-color);
@@ -503,6 +506,10 @@ p {
     margin-top: var(--medium-margin);
 }
 
+header + h3 {
+    margin-top: var(--medium-margin);
+}
+
 h3 + p {
     margin-top: var(--small-margin);
 }
@@ -526,8 +533,15 @@ a:has(> img) {
     border: none;
 }
 
+a img {
+    transition: transform .2s ease-in-out;
+}
+
+a:hover img {
+    transform: scale(1.03);
+}
+
 ol {
-    /* list-style-position: inside; */
     font-size: smaller;
 }
 
@@ -652,10 +666,6 @@ footer {
     width: 200px;
 }
 
-/* #post-banner {
-    margin-bottom: calc(var(--large-margin)*2);
-} */
-
 #raccoon-img-container {
     position: relative;
 
@@ -758,6 +768,25 @@ footer {
     }
 }
 
+p + .gallery-container {
+    margin-top: var(--medium-margin);
+}
+
+div.gallery-container {
+    --gap: 8px;
+
+    & .gallery {
+        display: flex;
+        gap: var(--gap);
+        
+
+        & img {
+            border-radius: var(--round-border);
+            margin-top: var(--gap);
+        }
+    }
+}
+
 img.icon {
     display: inline-block;
     margin-top: 0;
@@ -850,7 +879,11 @@ img.icon {
     .blog-post-title, .blog-year {
         font-size: 2rem;
     }
-    
+
+    ul#filter-ul-tags li {
+        line-height: 1.5 !important;
+    }
+
     /* IN --------------------------------------------------------------------*/
     #mobile-top-bar {
         display: block !important;
