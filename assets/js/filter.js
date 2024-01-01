@@ -221,6 +221,7 @@ function get_all_years() {
 
 function filter_tags(element) {
     clear_filter()
+    toggle_filter()
     tagsArrChbx.push(element.innerText.trim())
     
     const elementArr = [element.innerText.trim()]

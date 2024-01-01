@@ -1,1 +1,1 @@
-- gallery
+- gallery (lightbox: Lightbox2, FancyBox, or Magnific Popup)

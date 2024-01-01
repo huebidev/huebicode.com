@@ -43,7 +43,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
     --fg-color-text: rgb(165,165,165);
     --fg-color-heading: rgb(220, 220, 220);
-    --fg-color-dark: rgb(100,100,100);
+    --fg-color-dark: rgb(110,110,110);
     --bg-color: rgb(30,30,30);
     --bg-color-alpha: rgba(30,30,30,.8);
 
@@ -364,7 +364,6 @@ html {
                                         font-size: .85rem;
                                         cursor: pointer;
                                         user-select: none;
-                                        /* margin-right: 4px; */
                                         padding: 6px 8px;
 
                                         color: var(--fg-color-dark);
