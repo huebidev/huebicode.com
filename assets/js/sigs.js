@@ -41,7 +41,7 @@ function onSigsLoaded() {
         },
         
         columnDefs: [
-            { field: "offset", cellStyle: { 'text-align': 'left' }, flex: 1},
+            { field: "offset", cellStyle: { 'text-align': 'left' }, flex: 1, comparator: (a, b) => parseInt(a) - parseInt(b)},
             { field: "bytes", cellStyle: { 'text-align': 'left' }, flex: 3, sort: 'asc'},
             { field: "info", cellStyle: { 'text-align': 'left' }, flex: 3},
             { field: "cat", cellStyle: { 'text-align': 'left' }, headerName: 'Category'},
