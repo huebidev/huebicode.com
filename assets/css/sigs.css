@@ -1,0 +1,71 @@
+:root {
+    --background: rgb(33,33,33);
+    --foreground: rgb(220,220,220);
+    --hover-color: rgba(206, 246, 255, 0.1);
+    --blue: rgba(23, 182, 255, .7);
+}
+
+#main-wrapper, .content-grid {
+    height: 100svh;
+}
+
+#sig-wrapper {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100svh;
+
+    #desc {
+        font-size: 18px;
+        padding-inline: 24px;
+        padding-block: 18px;
+    }
+
+    #grid-wrapper {
+        #myGrid {
+            height: 96%;
+            border-top: 1px solid var(--blue);
+        }
+
+        #file-sigs {
+            border-top: 1px solid var(--blue);
+            font-size: 18px;
+            text-align: center;
+            padding-top: 12px;
+        }
+    }
+}
+
+.ag-theme-alpine-dark {
+    --ag-font-size: 16px;
+    --ag-font-family: 'InconsolataVar';
+
+    --ag-border-color: none;
+
+    --ag-foreground-color: var(--foreground);
+    --ag-background-color: var(--bg-color);
+    --ag-odd-row-background-color: rgba(100,100,100, .1);
+    
+    --ag-header-foreground-color: var(--foreground);
+    --ag-header-background-color: transparent;
+    --ag-header-column-resize-handle-color: rgb(80,80,80);
+
+    --ag-row-hover-color: var(--hover-color);
+    --ag-row-border-style: none;
+
+    --ag-input-focus-border-color: var(--blue);
+    --ag-input-focus-box-shadow: none;
+
+    --ag-card-shadow: none;
+}
+
+.ag-theme-alpine-dark .ag-header-cell {
+    border-bottom: 1px solid var(--blue);
+}
+
+.ag-theme-alpine-dark .ag-header-cell:hover {
+    background-color: var(--hover-color) !important; 
+}
+
+.ag-theme-alpine-dark .ag-menu {
+    background-color: var(--background);
+}

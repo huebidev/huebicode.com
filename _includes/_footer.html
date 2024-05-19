@@ -10,6 +10,9 @@
     {% if page.url == "/thank-you-for-your-donation.html" %}
         - Alex 
     {% else %}
-        ***
+        {% if page.url == "/sigs.html" %}
+        {% else %}
+            ***
+        {% endif %}
     {% endif %}
 </footer>

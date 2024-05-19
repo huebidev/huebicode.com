@@ -5,7 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+
     <link rel="stylesheet" href="/assets/css/style.css">
+    {% if page.url == "/sigs.html" %}
+        <script src="/assets/js/ag-grid-community.min.js"></script>
+        <link rel="stylesheet" href="/assets/css/sigs.css">
+    {% endif %}
+
     {% if page.code == true %}<link rel="stylesheet" href="/assets/highlight/monokai-sublime.min.css">{% endif %}
     {% feed_meta %}
     {% seo %}
@@ -27,6 +33,8 @@
     {% include _search-loader.html %}
 {% elsif page.url == "/thank-you-for-your-donation.html" %}
     <script src="/assets/js/confetti.js"></script>
+{% elsif page.url == "/sigs.html" %}
+    <script src="/assets/js/sigs.js"></script>
 {% endif %}
 
 {% if page.code == true %}
