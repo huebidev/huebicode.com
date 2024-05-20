@@ -1,3 +1,14 @@
+const searchWrapper = document.getElementById('search-bar-wrapper')
+const searchInput = document.getElementById('search-input')
+
+searchInput.addEventListener('focus', () => {
+    searchWrapper.classList.add('input-focused')
+})
+
+searchInput.addEventListener('blur', () => {
+    searchWrapper.classList.remove('input-focused')
+})
+
 var xhr = new XMLHttpRequest()
 xhr.open('GET', 'sigs.xml', true)
 xhr.send()
@@ -29,8 +40,6 @@ xhr.onreadystatechange = function () {
 
 let gridApi
 function onSigsLoaded() {
-    // sigCount.innerHTML = list.length
-
     const gridOptions = {
         rowData: list,
         animateRows: false,
@@ -52,6 +61,10 @@ function onSigsLoaded() {
         onGridReady: function (params) {
             gridApi = params.api
             updateRowCount()
+
+            document.getElementById('search-input').addEventListener('input', function() {
+                gridApi.setGridOption('quickFilterText', this.value)
+            })
         },
 
         onFilterChanged: updateRowCount,
