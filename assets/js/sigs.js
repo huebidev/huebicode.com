@@ -77,5 +77,5 @@ function onSigsLoaded() {
 function updateRowCount() {
     const rowCount = gridApi.getDisplayedRowCount();
     const text = rowCount === 1 ? 'file signature' : 'file signatures';
-    document.getElementById('file-sigs').innerHTML = `${rowCount} ${text}`;
+    document.getElementById('file-sigs-count').innerHTML = `${rowCount} ${text}`;
 }
