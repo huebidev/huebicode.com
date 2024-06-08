@@ -13,6 +13,7 @@
     {% endif %}
 
     {% if page.code == true %}<link rel="stylesheet" href="/assets/highlight/monokai-sublime.min.css">{% endif %}
+    {% if page.gallery == true %}<link rel="stylesheet" href="/assets/css/simple-lightbox.css">{% endif %}
     {% feed_meta %}
     {% seo %}
     <title>{{ page.title }}</title>
@@ -45,6 +46,16 @@
 
 {% if page.toc == true %}
     <script src="/assets/js/toc-scroll.js"></script>
+{% endif %}
+
+{% if page.gallery == true %}
+    <script src="/assets/js/simple-lightbox.min.js"></script>
+    <script>
+        new SimpleLightbox('.gallery a', {
+            overlayOpacity: 1,
+            close: false,
+        });
+    </script>
 {% endif %}
 
 </html>
