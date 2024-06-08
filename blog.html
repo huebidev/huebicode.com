@@ -64,7 +64,7 @@ aside_width: true
 
           <a href="{{ post.url }}">
             <div>
-              <time datetime="{{ post.date | date: '%Y-%m-%d'}}" class="post-date">{{ post.date | date: "%d.%m.%Y" }}</time>
+              <time datetime="{{ post.date | date: '%Y-%m-%d'}}" class="post-date">{{ post.date | date: "%-d %B %Y" }}</time>
               <h2>{{ post.title }}</h2>
               <p>{{ post.content | remove_headers | strip_html | truncatewords: 29}} <span class="blue">→</span></p>
             </div>
