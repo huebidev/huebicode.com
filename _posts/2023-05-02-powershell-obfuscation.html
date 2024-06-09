@@ -9,7 +9,7 @@ aside_width: true
     
     <header class="blog-header">
         <h1 class="blog-post-title">{{ page.title }}</h1>
-        <time datetime="{{ page.date | date: '%Y-%m-%d'}}">{{ page.date | date: "%-d %B %Y"}}</time>
+        <time datetime="{{ page.date | date: '%Y-%m-%d'}}">{{ page.date | date: site.data.settings.date_format}}</time>
     </header>
 
 <h3 id="intro">Intro</h3>

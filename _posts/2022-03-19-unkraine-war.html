@@ -11,7 +11,7 @@ include_footer: false
 
     <header class="blog-header">
         <h1 class="blog-post-title" style="color: rgb(33, 33, 33); margin-top: var(--large-margin);">{{ page.title }}</h1>
-        <time datetime="{{ page.date | date: '%Y-%m-%d'}}">{{ page.date | date: "%-d %B %Y"}}</time>
+        <time datetime="{{ page.date | date: '%Y-%m-%d'}}">{{ page.date | date: site.data.settings.date_format}}</time>
     </header>
 
     <p>On Feb. 24, 2022, Putin, with the support of the Belarusian regime, invades Ukraine with his troops, plunging Europe into war. My initial fears that Ukraine would quickly fall in the face of Russia's supposed military superiority have not come true. The Ukrainians have been steadfastly resisting the invasion for over three weeks and are bravely defending their country and their freedom.</p>
